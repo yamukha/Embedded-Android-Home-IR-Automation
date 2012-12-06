@@ -1,0 +1,111 @@
+   1               		.file	"udp_lcd.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+  15               	.Ltext0:
+  16               	.global	udp_lcd_get
+  18               	udp_lcd_get:
+  19               	.LFB3:
+  20               	.LM1:
+  21               	.LVL0:
+  22               	/* prologue: function */
+  23               	/* frame size = 0 */
+  24               	.LM2:
+  25 0000 00D0      		rcall .
+  26 0002 00D0      		rcall .
+  27 0004 80E0      		ldi r24,lo8(__c.1557)
+  28 0006 90E0      		ldi r25,hi8(__c.1557)
+  29               	.LVL1:
+  30 0008 EDB7      		in r30,__SP_L__
+  31 000a FEB7      		in r31,__SP_H__
+  32 000c 9283      		std Z+2,r25
+  33 000e 8183      		std Z+1,r24
+  34 0010 2091 0000 		lds r18,eth_buffer+17
+  35 0014 30E0      		ldi r19,lo8(0)
+  36 0016 2C51      		subi r18,lo8(-(-28))
+  37 0018 3040      		sbci r19,hi8(-(-28))
+  38 001a 9091 0000 		lds r25,eth_buffer+16
+  39 001e 80E0      		ldi r24,lo8(0)
+  40 0020 280F      		add r18,r24
+  41 0022 391F      		adc r19,r25
+  42 0024 3483      		std Z+4,r19
+  43 0026 2383      		std Z+3,r18
+  44 0028 0E94 0000 		call usart_write_P
+  45 002c 0F90      		pop __tmp_reg__
+  46 002e 0F90      		pop __tmp_reg__
+  47 0030 0F90      		pop __tmp_reg__
+  48 0032 0F90      		pop __tmp_reg__
+  49               	/* epilogue start */
+  50               	.LM3:
+  51 0034 0895      		ret
+  52               	.LFE3:
+  54               	.global	udp_lcd_init
+  56               	udp_lcd_init:
+  57               	.LFB2:
+  58               	.LM4:
+  59               	/* prologue: function */
+  60               	/* frame size = 0 */
+  61               	.LM5:
+  62 0036 89E5      		ldi r24,lo8(345)
+  63 0038 91E0      		ldi r25,hi8(345)
+  64 003a 60E0      		ldi r22,lo8(gs(udp_lcd_get))
+  65 003c 70E0      		ldi r23,hi8(gs(udp_lcd_get))
+  66 003e 0E94 0000 		call add_udp_app
+  67               	/* epilogue start */
+  68               	.LM6:
+  69 0042 0895      		ret
+  70               	.LFE2:
+  72               		.section	.progmem.data,"a",@progbits
+  75               	__c.1557:
+  76 0000 2A2A 204C 		.string	"** LCD DATA GET Bytes: %i **\r\n"
+  76      4344 2044 
+  76      4154 4120 
+  76      4745 5420 
+  76      4279 7465 
+  77               		.comm eth,1,1
+  78               		.comm TCP_PORT_TABLE,20,1
+  79               		.comm UDP_PORT_TABLE,20,1
+  80               		.comm arp_entry,60,1
+  81               		.comm tcp_entry,132,1
+  82               		.comm buffercounter,2,1
+  83               		.comm usart_rx_buffer,50,1
+  84               		.comm rx_buffer_pointer_in,2,1
+  85               		.comm rx_buffer_pointer_out,2,1
+  86               		.comm usart_status,1,1
+  87               		.comm time,4,1
+  88               		.comm stack_watchdog,2,1
+  89               		.comm gp_timer,1,1
+ 122               	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 udp_lcd.c
+C:\DOCUME~1\flyman\LOCALS~1\Temp/ccRc95Je.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\flyman\LOCALS~1\Temp/ccRc95Je.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\flyman\LOCALS~1\Temp/ccRc95Je.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\flyman\LOCALS~1\Temp/ccRc95Je.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\flyman\LOCALS~1\Temp/ccRc95Je.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\flyman\LOCALS~1\Temp/ccRc95Je.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\flyman\LOCALS~1\Temp/ccRc95Je.s:18     .text:00000000 udp_lcd_get
+C:\DOCUME~1\flyman\LOCALS~1\Temp/ccRc95Je.s:75     .progmem.data:00000000 __c.1557
+C:\DOCUME~1\flyman\LOCALS~1\Temp/ccRc95Je.s:56     .text:00000036 udp_lcd_init
+                            *COM*:00000001 eth
+                            *COM*:00000014 TCP_PORT_TABLE
+                            *COM*:00000014 UDP_PORT_TABLE
+                            *COM*:0000003c arp_entry
+                            *COM*:00000084 tcp_entry
+                            *COM*:00000002 buffercounter
+                            *COM*:00000032 usart_rx_buffer
+                            *COM*:00000002 rx_buffer_pointer_in
+                            *COM*:00000002 rx_buffer_pointer_out
+                            *COM*:00000001 usart_status
+                            *COM*:00000004 time
+                            *COM*:00000002 stack_watchdog
+                            *COM*:00000001 gp_timer
+
+UNDEFINED SYMBOLS
+eth_buffer
+usart_write_P
+add_udp_app
+__do_clear_bss

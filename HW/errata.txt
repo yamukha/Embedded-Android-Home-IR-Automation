@@ -1,0 +1,7 @@
+Errata list for ETH_M32 Expirimental board:
+1) Timer2 used for carrier 36KHz so it connected to VT1.
+So swap EN & PWM lines. 
+IR LED connceted to LEDA LEDK
+2) DD3 pin 42 (AIN0/PB2) rename to INTM
+3) connect each to other XP1 lines in pairs (1-2,5-6,7-8,9-10,13-14,15-16)   
+4) Do not use DD1. Make shorcut  INTE-INT (DD1,pin4  - DD2,pin4)

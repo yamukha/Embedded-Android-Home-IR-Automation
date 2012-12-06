@@ -1,0 +1,548 @@
+   1               		.file	"http_get.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+  15               	.Ltext0:
+  16               	.global	http_request
+  18               	http_request:
+  19               	.LFB3:
+  20               	.LM1:
+  21 0000 6F92      		push r6
+  22 0002 7F92      		push r7
+  23 0004 8F92      		push r8
+  24 0006 9F92      		push r9
+  25 0008 AF92      		push r10
+  26 000a BF92      		push r11
+  27 000c CF92      		push r12
+  28 000e DF92      		push r13
+  29 0010 EF92      		push r14
+  30 0012 FF92      		push r15
+  31 0014 0F93      		push r16
+  32 0016 1F93      		push r17
+  33 0018 CF93      		push r28
+  34 001a DF93      		push r29
+  35               	/* prologue: function */
+  36               	/* frame size = 0 */
+  37               	.LM2:
+  38 001c 8091 0000 		lds r24,http_get_state
+  39 0020 9091 0000 		lds r25,(http_get_state)+1
+  40 0024 0297      		sbiw r24,2
+  41 0026 00F0      		brlo .L2
+  42 0028 8091 0000 		lds r24,http_get_state
+  43 002c 9091 0000 		lds r25,(http_get_state)+1
+  44 0030 4497      		sbiw r24,20
+  45 0032 00F4      		brsh .L2
+  46 0034 8091 0000 		lds r24,http_get_state
+  47 0038 9091 0000 		lds r25,(http_get_state)+1
+  48 003c 0196      		adiw r24,1
+  49 003e 9093 0000 		sts (http_get_state)+1,r25
+  50 0042 8093 0000 		sts http_get_state,r24
+  51               	.L2:
+  52               	.LM3:
+  53 0046 8091 0000 		lds r24,http_get_state
+  54 004a 9091 0000 		lds r25,(http_get_state)+1
+  55 004e 892B      		or r24,r25
+  56 0050 01F0      		breq .+2
+  57 0052 00C0      		rjmp .L3
+  58               	.LBB2:
+  59               	.LM4:
+  60 0054 00D0      		rcall .
+  61 0056 80E0      		ldi r24,lo8(__c.1583)
+  62 0058 90E0      		ldi r25,hi8(__c.1583)
+  63 005a EDB7      		in r30,__SP_L__
+  64 005c FEB7      		in r31,__SP_H__
+  65 005e 9283      		std Z+2,r25
+  66 0060 8183      		std Z+1,r24
+  67 0062 0E94 0000 		call usart_write_P
+  68               	.LM5:
+  69 0066 0F90      		pop __tmp_reg__
+  70 0068 0F90      		pop __tmp_reg__
+  71 006a 82E3      		ldi r24,lo8(2354)
+  72 006c 99E0      		ldi r25,hi8(2354)
+  73 006e 60E0      		ldi r22,lo8(gs(test))
+  74 0070 70E0      		ldi r23,hi8(gs(test))
+  75 0072 0E94 0000 		call add_tcp_app
+  76               	.LM6:
+  77 0076 60EC      		ldi r22,lo8(553756864)
+  78 0078 78EA      		ldi r23,hi8(553756864)
+  79 007a 81E0      		ldi r24,hlo8(553756864)
+  80 007c 91E2      		ldi r25,hhi8(553756864)
+  81 007e 0E94 0000 		call arp_request
+  82 0082 8823      		tst r24
+  83 0084 01F4      		brne .+2
+  84 0086 00C0      		rjmp .L4
+  85 0088 80E0      		ldi r24,lo8(0)
+  86 008a 90E0      		ldi r25,hi8(0)
+  87 008c A0E0      		ldi r26,hlo8(0)
+  88 008e B0E0      		ldi r27,hhi8(0)
+  89               	.LVL0:
+  90               	.L5:
+  91               	.LBB3:
+  92               	.LBB4:
+  93               	.LM7:
+  94               	/* #APP */
+  95               	 ;  78 "http_get.c" 1
+  96 0090 0000      		nop
+  97               	 ;  0 "" 2
+  98               	/* #NOAPP */
+  99 0092 0196      		adiw r24,1
+ 100 0094 A11D      		adc r26,__zero_reg__
+ 101 0096 B11D      		adc r27,__zero_reg__
+ 102 0098 8038      		cpi r24,lo8(2000000)
+ 103 009a F4E8      		ldi r31,hi8(2000000)
+ 104 009c 9F07      		cpc r25,r31
+ 105 009e FEE1      		ldi r31,hlo8(2000000)
+ 106 00a0 AF07      		cpc r26,r31
+ 107 00a2 F0E0      		ldi r31,hhi8(2000000)
+ 108 00a4 BF07      		cpc r27,r31
+ 109 00a6 01F4      		brne .L5
+ 110               	.LBE4:
+ 111               	.LM8:
+ 112 00a8 60EC      		ldi r22,lo8(553756864)
+ 113 00aa 78EA      		ldi r23,hi8(553756864)
+ 114 00ac 81E0      		ldi r24,hlo8(553756864)
+ 115 00ae 91E2      		ldi r25,hhi8(553756864)
+ 116 00b0 40E0      		ldi r20,lo8(20480)
+ 117 00b2 50E5      		ldi r21,hi8(20480)
+ 118 00b4 29E0      		ldi r18,lo8(12809)
+ 119 00b6 32E3      		ldi r19,hi8(12809)
+ 120 00b8 0E94 0000 		call tcp_port_open
+ 121               	.LVL1:
+ 122 00bc DD24      		clr r13
+ 123               	.LVL2:
+ 124 00be A5E0      		ldi r26,lo8(5)
+ 125 00c0 EA2E      		mov r14,r26
+ 126 00c2 F12C      		mov r15,__zero_reg__
+ 127 00c4 012D      		mov r16,__zero_reg__
+ 128 00c6 112D      		mov r17,__zero_reg__
+ 129               	.LVL3:
+ 130               	.LM9:
+ 131 00c8 C6E1      		ldi r28,lo8(22)
+ 132 00ca D0E0      		ldi r29,hi8(22)
+ 133 00cc 00C0      		rjmp .L6
+ 134               	.LVL4:
+ 135               	.L10:
+ 136               	.LM10:
+ 137 00ce 60EC      		ldi r22,lo8(553756864)
+ 138 00d0 78EA      		ldi r23,hi8(553756864)
+ 139 00d2 81E0      		ldi r24,hlo8(553756864)
+ 140 00d4 91E2      		ldi r25,hhi8(553756864)
+ 141 00d6 40E0      		ldi r20,lo8(20480)
+ 142 00d8 50E5      		ldi r21,hi8(20480)
+ 143 00da 0E94 0000 		call tcp_entry_search
+ 144               	.LM11:
+ 145 00de 2FE1      		ldi r18,lo8(31)
+ 146 00e0 D216      		cp r13,r18
+ 147 00e2 01F4      		brne .L7
+ 148               	.LM12:
+ 149 00e4 00D0      		rcall .
+ 150 00e6 80E0      		ldi r24,lo8(__c.1592)
+ 151 00e8 90E0      		ldi r25,hi8(__c.1592)
+ 152 00ea EDB7      		in r30,__SP_L__
+ 153 00ec FEB7      		in r31,__SP_H__
+ 154 00ee 9283      		std Z+2,r25
+ 155 00f0 8183      		std Z+1,r24
+ 156 00f2 0E94 0000 		call usart_write_P
+ 157 00f6 0F90      		pop __tmp_reg__
+ 158 00f8 0F90      		pop __tmp_reg__
+ 159 00fa 00C0      		rjmp .L11
+ 160               	.L7:
+ 161               	.LM13:
+ 162 00fc E82E      		mov r14,r24
+ 163 00fe FF24      		clr r15
+ 164 0100 00E0      		ldi r16,lo8(0)
+ 165 0102 10E0      		ldi r17,hi8(0)
+ 166               	.LM14:
+ 167 0104 F5E0      		ldi r31,lo8(5)
+ 168 0106 EF16      		cp r14,r31
+ 169 0108 F104      		cpc r15,__zero_reg__
+ 170 010a 0105      		cpc r16,__zero_reg__
+ 171 010c 1105      		cpc r17,__zero_reg__
+ 172 010e 00F0      		brlo .L9
+ 173               	.LM15:
+ 174 0110 D394      		inc r13
+ 175               	.L6:
+ 176               	.LM16:
+ 177 0112 EC9E      		mul r14,r28
+ 178 0114 F001      		movw r30,r0
+ 179 0116 ED9E      		mul r14,r29
+ 180 0118 F00D      		add r31,r0
+ 181 011a FC9E      		mul r15,r28
+ 182 011c F00D      		add r31,r0
+ 183 011e 1124      		clr r1
+ 184 0120 E050      		subi r30,lo8(-(tcp_entry))
+ 185 0122 F040      		sbci r31,hi8(-(tcp_entry))
+ 186 0124 8189      		ldd r24,Z+17
+ 187 0126 9289      		ldd r25,Z+18
+ 188 0128 0197      		sbiw r24,1
+ 189 012a 01F4      		brne .L10
+ 190               	.L9:
+ 191               	.LM17:
+ 192 012c 00D0      		rcall .
+ 193 012e 80E0      		ldi r24,lo8(__c.1597)
+ 194 0130 90E0      		ldi r25,hi8(__c.1597)
+ 195 0132 EDB7      		in r30,__SP_L__
+ 196 0134 FEB7      		in r31,__SP_H__
+ 197 0136 9283      		std Z+2,r25
+ 198 0138 8183      		std Z+1,r24
+ 199 013a 0E94 0000 		call usart_write_P
+ 200               	.LM18:
+ 201 013e 86E1      		ldi r24,lo8(22)
+ 202 0140 90E0      		ldi r25,hi8(22)
+ 203 0142 E89E      		mul r14,r24
+ 204 0144 F001      		movw r30,r0
+ 205 0146 E99E      		mul r14,r25
+ 206 0148 F00D      		add r31,r0
+ 207 014a F89E      		mul r15,r24
+ 208 014c F00D      		add r31,r0
+ 209 014e 1124      		clr r1
+ 210 0150 E050      		subi r30,lo8(-(tcp_entry+21))
+ 211 0152 F040      		sbci r31,hi8(-(tcp_entry+21))
+ 212 0154 8081      		ld r24,Z
+ 213 0156 8160      		ori r24,lo8(1)
+ 214 0158 8083      		st Z,r24
+ 215               	.LM19:
+ 216 015a 82E0      		ldi r24,lo8(2)
+ 217 015c 90E0      		ldi r25,hi8(2)
+ 218 015e 9093 0000 		sts (http_get_state)+1,r25
+ 219 0162 8093 0000 		sts http_get_state,r24
+ 220 0166 0F90      		pop __tmp_reg__
+ 221 0168 0F90      		pop __tmp_reg__
+ 222 016a 00C0      		rjmp .L3
+ 223               	.LVL5:
+ 224               	.L4:
+ 225               	.LBE3:
+ 226               	.LM20:
+ 227 016c 81E0      		ldi r24,lo8(1)
+ 228 016e 90E0      		ldi r25,hi8(1)
+ 229 0170 9093 0000 		sts (http_get_state)+1,r25
+ 230 0174 8093 0000 		sts http_get_state,r24
+ 231               	.LVL6:
+ 232               	.L3:
+ 233               	.LBE2:
+ 234               	.LM21:
+ 235 0178 8091 0000 		lds r24,http_get_state
+ 236 017c 9091 0000 		lds r25,(http_get_state)+1
+ 237 0180 0B97      		sbiw r24,11
+ 238 0182 00F0      		brlo .L11
+ 239 0184 8091 0000 		lds r24,http_get_state
+ 240 0188 9091 0000 		lds r25,(http_get_state)+1
+ 241 018c 4497      		sbiw r24,20
+ 242 018e 00F4      		brsh .L11
+ 243               	.LM22:
+ 244 0190 00D0      		rcall .
+ 245 0192 80E0      		ldi r24,lo8(__c.1599)
+ 246 0194 90E0      		ldi r25,hi8(__c.1599)
+ 247 0196 EDB7      		in r30,__SP_L__
+ 248 0198 FEB7      		in r31,__SP_H__
+ 249 019a 9283      		std Z+2,r25
+ 250 019c 8183      		std Z+1,r24
+ 251 019e 0E94 0000 		call usart_write_P
+ 252               	.LM23:
+ 253 01a2 0F90      		pop __tmp_reg__
+ 254 01a4 0F90      		pop __tmp_reg__
+ 255 01a6 60EC      		ldi r22,lo8(553756864)
+ 256 01a8 78EA      		ldi r23,hi8(553756864)
+ 257 01aa 81E0      		ldi r24,hlo8(553756864)
+ 258 01ac 91E2      		ldi r25,hhi8(553756864)
+ 259 01ae 40E0      		ldi r20,lo8(20480)
+ 260 01b0 50E5      		ldi r21,hi8(20480)
+ 261 01b2 0E94 0000 		call tcp_entry_search
+ 262 01b6 682E      		mov r6,r24
+ 263               	.LVL7:
+ 264 01b8 7724      		clr r7
+ 265               	.LVL8:
+ 266               	.LM24:
+ 267 01ba 80E0      		ldi r24,lo8(0)
+ 268 01bc 60E0      		ldi r22,lo8(0)
+ 269 01be 70E0      		ldi r23,hi8(0)
+ 270 01c0 40E0      		ldi r20,lo8(mymac)
+ 271 01c2 50E0      		ldi r21,hi8(mymac)
+ 272 01c4 20E0      		ldi r18,lo8(myLAN)
+ 273 01c6 30E0      		ldi r19,hi8(myLAN)
+ 274 01c8 00E5      		ldi r16,lo8(80)
+ 275 01ca 10E0      		ldi r17,hi8(80)
+ 276               	.LVL9:
+ 277 01cc F0E5      		ldi r31,lo8(80)
+ 278 01ce EF2E      		mov r14,r31
+ 279 01d0 F12C      		mov r15,__zero_reg__
+ 280 01d2 E0E0      		ldi r30,lo8(WEATHER_GET_STRING)
+ 281 01d4 CE2E      		mov r12,r30
+ 282 01d6 E0E0      		ldi r30,hi8(WEATHER_GET_STRING)
+ 283 01d8 DE2E      		mov r13,r30
+ 284 01da 9DE3      		ldi r25,lo8(61)
+ 285 01dc A92E      		mov r10,r25
+ 286 01de B12C      		mov r11,__zero_reg__
+ 287 01e0 0E94 0000 		call create_tcp_packet
+ 288               	.LM25:
+ 289 01e4 86E1      		ldi r24,lo8(22)
+ 290 01e6 90E0      		ldi r25,hi8(22)
+ 291 01e8 689E      		mul r6,r24
+ 292 01ea F001      		movw r30,r0
+ 293 01ec 699E      		mul r6,r25
+ 294 01ee F00D      		add r31,r0
+ 295 01f0 789E      		mul r7,r24
+ 296 01f2 F00D      		add r31,r0
+ 297 01f4 1124      		clr r1
+ 298 01f6 E050      		subi r30,lo8(-(tcp_entry))
+ 299 01f8 F040      		sbci r31,hi8(-(tcp_entry))
+ 300 01fa 88E1      		ldi r24,lo8(24)
+ 301 01fc 808B      		std Z+16,r24
+ 302               	.LVL10:
+ 303               	.L11:
+ 304               	/* epilogue start */
+ 305               	.LM26:
+ 306 01fe DF91      		pop r29
+ 307 0200 CF91      		pop r28
+ 308 0202 1F91      		pop r17
+ 309 0204 0F91      		pop r16
+ 310               	.LVL11:
+ 311 0206 FF90      		pop r15
+ 312               	.LVL12:
+ 313 0208 EF90      		pop r14
+ 314               	.LVL13:
+ 315 020a DF90      		pop r13
+ 316               	.LVL14:
+ 317 020c CF90      		pop r12
+ 318 020e BF90      		pop r11
+ 319 0210 AF90      		pop r10
+ 320 0212 9F90      		pop r9
+ 321 0214 8F90      		pop r8
+ 322 0216 7F90      		pop r7
+ 323               	.LVL15:
+ 324 0218 6F90      		pop r6
+ 325               	.LVL16:
+ 326 021a 0895      		ret
+ 327               	.LFE3:
+ 329               	.global	test
+ 331               	test:
+ 332               	.LFB2:
+ 333               	.LM27:
+ 334               	.LVL17:
+ 335 021c BF92      		push r11
+ 336 021e CF92      		push r12
+ 337 0220 DF92      		push r13
+ 338 0222 EF92      		push r14
+ 339 0224 FF92      		push r15
+ 340 0226 0F93      		push r16
+ 341 0228 1F93      		push r17
+ 342 022a CF93      		push r28
+ 343 022c DF93      		push r29
+ 344               	/* prologue: function */
+ 345               	/* frame size = 0 */
+ 346 022e B82E      		mov r11,r24
+ 347               	.LBB5:
+ 348               	.LM28:
+ 349 0230 8091 0000 		lds r24,eth_buffer+46
+ 350               	.LVL18:
+ 351 0234 C82F      		mov r28,r24
+ 352               	.LVL19:
+ 353 0236 D0E0      		ldi r29,lo8(0)
+ 354               	.LVL20:
+ 355 0238 C07F      		andi r28,lo8(240)
+ 356 023a D070      		andi r29,hi8(240)
+ 357               	.LVL21:
+ 358 023c D595      		asr r29
+ 359 023e C795      		ror r28
+ 360 0240 D595      		asr r29
+ 361 0242 C795      		ror r28
+ 362 0244 A296      		adiw r28,34
+ 363 0246 00E0      		ldi r16,lo8(eth_buffer)
+ 364 0248 E02E      		mov r14,r16
+ 365 024a 00E0      		ldi r16,hi8(eth_buffer)
+ 366 024c F02E      		mov r15,r16
+ 367 024e EC0E      		add r14,r28
+ 368 0250 FD1E      		adc r15,r29
+ 369               	.LM29:
+ 370 0252 10E0      		ldi r17,lo8(__c.1558)
+ 371 0254 C12E      		mov r12,r17
+ 372 0256 10E0      		ldi r17,hi8(__c.1558)
+ 373 0258 D12E      		mov r13,r17
+ 374 025a 00C0      		rjmp .L14
+ 375               	.L15:
+ 376 025c 00D0      		rcall .
+ 377 025e 00D0      		rcall .
+ 378 0260 EDB7      		in r30,__SP_L__
+ 379 0262 FEB7      		in r31,__SP_H__
+ 380 0264 3196      		adiw r30,1
+ 381 0266 ADB7      		in r26,__SP_L__
+ 382 0268 BEB7      		in r27,__SP_H__
+ 383 026a 1296      		adiw r26,1+1
+ 384 026c DC92      		st X,r13
+ 385 026e CE92      		st -X,r12
+ 386 0270 1197      		sbiw r26,1
+ 387 0272 D701      		movw r26,r14
+ 388 0274 8D91      		ld r24,X+
+ 389 0276 7D01      		movw r14,r26
+ 390 0278 8283      		std Z+2,r24
+ 391 027a 1382      		std Z+3,__zero_reg__
+ 392 027c 0E94 0000 		call usart_write_P
+ 393               	.LM30:
+ 394 0280 2196      		adiw r28,1
+ 395 0282 0F90      		pop __tmp_reg__
+ 396 0284 0F90      		pop __tmp_reg__
+ 397 0286 0F90      		pop __tmp_reg__
+ 398 0288 0F90      		pop __tmp_reg__
+ 399               	.L14:
+ 400 028a 2091 0000 		lds r18,eth_buffer+17
+ 401 028e 30E0      		ldi r19,lo8(0)
+ 402 0290 2E5D      		subi r18,lo8(-(34))
+ 403 0292 3F4F      		sbci r19,hi8(-(34))
+ 404 0294 1091 0000 		lds r17,eth_buffer+16
+ 405 0298 00E0      		ldi r16,lo8(0)
+ 406 029a 200F      		add r18,r16
+ 407 029c 311F      		adc r19,r17
+ 408 029e 8091 0000 		lds r24,eth_buffer+46
+ 409 02a2 90E0      		ldi r25,lo8(0)
+ 410 02a4 807F      		andi r24,lo8(240)
+ 411 02a6 9070      		andi r25,hi8(240)
+ 412 02a8 9595      		asr r25
+ 413 02aa 8795      		ror r24
+ 414 02ac 9595      		asr r25
+ 415 02ae 8795      		ror r24
+ 416 02b0 281B      		sub r18,r24
+ 417 02b2 390B      		sbc r19,r25
+ 418 02b4 C217      		cp r28,r18
+ 419 02b6 D307      		cpc r29,r19
+ 420 02b8 04F0      		brlt .L15
+ 421               	.LBE5:
+ 422               	.LM31:
+ 423 02ba 2B2D      		mov r18,r11
+ 424 02bc 30E0      		ldi r19,lo8(0)
+ 425 02be 86E1      		ldi r24,lo8(22)
+ 426 02c0 90E0      		ldi r25,hi8(22)
+ 427 02c2 289F      		mul r18,r24
+ 428 02c4 F001      		movw r30,r0
+ 429 02c6 299F      		mul r18,r25
+ 430 02c8 F00D      		add r31,r0
+ 431 02ca 389F      		mul r19,r24
+ 432 02cc F00D      		add r31,r0
+ 433 02ce 1124      		clr r1
+ 434 02d0 E050      		subi r30,lo8(-(tcp_entry))
+ 435 02d2 F040      		sbci r31,hi8(-(tcp_entry))
+ 436 02d4 8FEF      		ldi r24,lo8(-1)
+ 437 02d6 838B      		std Z+19,r24
+ 438               	.LM32:
+ 439 02d8 80E1      		ldi r24,lo8(16)
+ 440 02da 808B      		std Z+16,r24
+ 441               	.LM33:
+ 442 02dc 80E0      		ldi r24,lo8(0)
+ 443 02de 90E0      		ldi r25,hi8(0)
+ 444 02e0 6B2D      		mov r22,r11
+ 445 02e2 0E94 0000 		call create_new_tcp_packet
+ 446               	/* epilogue start */
+ 447               	.LM34:
+ 448 02e6 DF91      		pop r29
+ 449               	.LVL22:
+ 450 02e8 CF91      		pop r28
+ 451               	.LVL23:
+ 452 02ea 1F91      		pop r17
+ 453 02ec 0F91      		pop r16
+ 454 02ee FF90      		pop r15
+ 455 02f0 EF90      		pop r14
+ 456 02f2 DF90      		pop r13
+ 457 02f4 CF90      		pop r12
+ 458 02f6 BF90      		pop r11
+ 459               	.LVL24:
+ 460 02f8 0895      		ret
+ 461               	.LFE2:
+ 463               	.global	WEATHER_GET_STRING
+ 464               		.section	.progmem.data,"a",@progbits
+ 467               	WEATHER_GET_STRING:
+ 468 0000 4745 5420 		.string	"GET / HTTP/1.1  \r\n Host:whatismyip.org\r\n Connection: close\r\n"
+ 468      2F20 4854 
+ 468      5450 2F31 
+ 468      2E31 2020 
+ 468      0D0A 2048 
+ 469               	.global	http_get_state
+ 470               	.global	http_get_state
+ 471               		.section .bss
+ 474               	http_get_state:
+ 475 0000 0000      		.skip 2,0
+ 476               		.section	.progmem.data
+ 479               	__c.1599:
+ 480 003d 0A0D 4854 		.string	"\n\rHTTP GET sent \r\n"
+ 480      5450 2047 
+ 480      4554 2073 
+ 480      656E 7420 
+ 480      0D0A 00
+ 483               	__c.1597:
+ 484 0050 5443 5020 		.string	"TCP Eintrag gefunden (HTTP_CLIENT)!\r\n"
+ 484      4569 6E74 
+ 484      7261 6720 
+ 484      6765 6675 
+ 484      6E64 656E 
+ 487               	__c.1592:
+ 488 0076 5443 5020 		.string	"TCP Eintrag nicht gefunden (HTTP_CLIENT)!\r\n"
+ 488      4569 6E74 
+ 488      7261 6720 
+ 488      6E69 6368 
+ 488      7420 6765 
+ 491               	__c.1583:
+ 492 00a2 4152 5020 		.string	"ARP Request to HTTP URL\n\r"
+ 492      5265 7175 
+ 492      6573 7420 
+ 492      746F 2048 
+ 492      5454 5020 
+ 495               	__c.1558:
+ 496 00bc 2563 00   		.string	"%c"
+ 497               		.comm eth,1,1
+ 498               		.comm TCP_PORT_TABLE,20,1
+ 499               		.comm UDP_PORT_TABLE,20,1
+ 500               		.comm arp_entry,60,1
+ 501               		.comm tcp_entry,132,1
+ 502               		.comm buffercounter,2,1
+ 503               		.comm usart_rx_buffer,50,1
+ 504               		.comm rx_buffer_pointer_in,2,1
+ 505               		.comm rx_buffer_pointer_out,2,1
+ 506               		.comm usart_status,1,1
+ 507               		.comm time,4,1
+ 508               		.comm stack_watchdog,2,1
+ 509               		.comm gp_timer,1,1
+ 542               	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 http_get.c
+C:\DOCUME~1\flyman\LOCALS~1\Temp/ccu8xgEB.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\flyman\LOCALS~1\Temp/ccu8xgEB.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\flyman\LOCALS~1\Temp/ccu8xgEB.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\flyman\LOCALS~1\Temp/ccu8xgEB.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\flyman\LOCALS~1\Temp/ccu8xgEB.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\flyman\LOCALS~1\Temp/ccu8xgEB.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\flyman\LOCALS~1\Temp/ccu8xgEB.s:18     .text:00000000 http_request
+C:\DOCUME~1\flyman\LOCALS~1\Temp/ccu8xgEB.s:474    .bss:00000000 http_get_state
+C:\DOCUME~1\flyman\LOCALS~1\Temp/ccu8xgEB.s:491    .progmem.data:000000a2 __c.1583
+C:\DOCUME~1\flyman\LOCALS~1\Temp/ccu8xgEB.s:331    .text:0000021c test
+C:\DOCUME~1\flyman\LOCALS~1\Temp/ccu8xgEB.s:487    .progmem.data:00000076 __c.1592
+                            *COM*:00000084 tcp_entry
+C:\DOCUME~1\flyman\LOCALS~1\Temp/ccu8xgEB.s:483    .progmem.data:00000050 __c.1597
+C:\DOCUME~1\flyman\LOCALS~1\Temp/ccu8xgEB.s:479    .progmem.data:0000003d __c.1599
+C:\DOCUME~1\flyman\LOCALS~1\Temp/ccu8xgEB.s:467    .progmem.data:00000000 WEATHER_GET_STRING
+C:\DOCUME~1\flyman\LOCALS~1\Temp/ccu8xgEB.s:495    .progmem.data:000000bc __c.1558
+                            *COM*:00000001 eth
+                            *COM*:00000014 TCP_PORT_TABLE
+                            *COM*:00000014 UDP_PORT_TABLE
+                            *COM*:0000003c arp_entry
+                            *COM*:00000002 buffercounter
+                            *COM*:00000032 usart_rx_buffer
+                            *COM*:00000002 rx_buffer_pointer_in
+                            *COM*:00000002 rx_buffer_pointer_out
+                            *COM*:00000001 usart_status
+                            *COM*:00000004 time
+                            *COM*:00000002 stack_watchdog
+                            *COM*:00000001 gp_timer
+
+UNDEFINED SYMBOLS
+usart_write_P
+add_tcp_app
+arp_request
+tcp_port_open
+tcp_entry_search
+mymac
+myLAN
+create_tcp_packet
+eth_buffer
+create_new_tcp_packet
+__do_clear_bss

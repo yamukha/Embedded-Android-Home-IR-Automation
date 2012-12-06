@@ -1,0 +1,148 @@
+   1               		.file	"timer.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+  15               	.Ltext0:
+  16               	.global	timer_init
+  18               	timer_init:
+  19               	.LFB2:
+  20               	.LM1:
+  21               	/* prologue: function */
+  22               	/* frame size = 0 */
+  23               	.LM2:
+  24 0000 8EB5      		in r24,78-32
+  25 0002 8D60      		ori r24,lo8(13)
+  26 0004 8EBD      		out 78-32,r24
+  27               	.LM3:
+  28 0006 1DBC      		out (76)+1-32,__zero_reg__
+  29 0008 1CBC      		out 76-32,__zero_reg__
+  30               	.LM4:
+  31 000a 88E0      		ldi r24,lo8(15624)
+  32 000c 9DE3      		ldi r25,hi8(15624)
+  33 000e 9BBD      		out (74)+1-32,r25
+  34 0010 8ABD      		out 74-32,r24
+  35               	.LM5:
+  36 0012 89B7      		in r24,89-32
+  37 0014 8061      		ori r24,lo8(16)
+  38 0016 89BF      		out 89-32,r24
+  39               	/* epilogue start */
+  40               	.LM6:
+  41 0018 0895      		ret
+  42               	.LFE2:
+  44               	.global	__vector_7
+  46               	__vector_7:
+  47               	.LFB3:
+  48               	.LM7:
+  49 001a 1F92      		push __zero_reg__
+  50 001c 0F92      		push r0
+  51 001e 0FB6      		in r0,__SREG__
+  52 0020 0F92      		push r0
+  53 0022 1124      		clr __zero_reg__
+  54 0024 2F93      		push r18
+  55 0026 8F93      		push r24
+  56 0028 9F93      		push r25
+  57 002a AF93      		push r26
+  58 002c BF93      		push r27
+  59               	/* prologue: Signal */
+  60               	/* frame size = 0 */
+  61               	.LM8:
+  62 002e 8091 0000 		lds r24,time
+  63 0032 9091 0000 		lds r25,(time)+1
+  64 0036 A091 0000 		lds r26,(time)+2
+  65 003a B091 0000 		lds r27,(time)+3
+  66 003e 0196      		adiw r24,1
+  67 0040 A11D      		adc r26,__zero_reg__
+  68 0042 B11D      		adc r27,__zero_reg__
+  69 0044 8093 0000 		sts time,r24
+  70 0048 9093 0000 		sts (time)+1,r25
+  71 004c A093 0000 		sts (time)+2,r26
+  72 0050 B093 0000 		sts (time)+3,r27
+  73               	.LM9:
+  74 0054 8091 0000 		lds r24,stack_watchdog
+  75 0058 9091 0000 		lds r25,(stack_watchdog)+1
+  76 005c 0196      		adiw r24,1
+  77 005e 9093 0000 		sts (stack_watchdog)+1,r25
+  78 0062 8093 0000 		sts stack_watchdog,r24
+  79 0066 0197      		sbiw r24,1
+  80 0068 815B      		subi r24,lo8(1201)
+  81 006a 9440      		sbci r25,hi8(1201)
+  82 006c 00F0      		brlo .L4
+  83               	.LM10:
+  84               	/* #APP */
+  85               	 ;  90 "timer.c" 1
+  86 006e E0E0      		ldi r30,0
+  87               	 ;  0 "" 2
+  88               	 ;  90 "timer.c" 1
+  89 0070 F0E0      		ldi r31,0
+  90               	 ;  0 "" 2
+  91               	 ;  90 "timer.c" 1
+  92 0072 0994      		ijmp
+  93               	 ;  0 "" 2
+  94               	/* #NOAPP */
+  95               	.L4:
+  96               	.LM11:
+  97 0074 8091 0000 		lds r24,eth
+  98 0078 8260      		ori r24,lo8(2)
+  99 007a 8093 0000 		sts eth,r24
+ 100               	/* epilogue start */
+ 101               	.LM12:
+ 102 007e BF91      		pop r27
+ 103 0080 AF91      		pop r26
+ 104 0082 9F91      		pop r25
+ 105 0084 8F91      		pop r24
+ 106 0086 2F91      		pop r18
+ 107 0088 0F90      		pop r0
+ 108 008a 0FBE      		out __SREG__,r0
+ 109 008c 0F90      		pop r0
+ 110 008e 1F90      		pop __zero_reg__
+ 111 0090 1895      		reti
+ 112               	.LFE3:
+ 114               	.global	time_watchdog
+ 115               	.global	time_watchdog
+ 116               		.section .bss
+ 119               	time_watchdog:
+ 120 0000 0000 0000 		.skip 4,0
+ 121               		.comm buffercounter,2,1
+ 122               		.comm usart_rx_buffer,50,1
+ 123               		.comm rx_buffer_pointer_in,2,1
+ 124               		.comm rx_buffer_pointer_out,2,1
+ 125               		.comm usart_status,1,1
+ 126               		.comm eth,1,1
+ 127               		.comm TCP_PORT_TABLE,20,1
+ 128               		.comm UDP_PORT_TABLE,20,1
+ 129               		.comm arp_entry,60,1
+ 130               		.comm tcp_entry,132,1
+ 131               		.comm time,4,1
+ 132               		.comm stack_watchdog,2,1
+ 133               		.comm gp_timer,1,1
+ 166               	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 timer.c
+C:\DOCUME~1\flyman\LOCALS~1\Temp/cc79P8pj.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\flyman\LOCALS~1\Temp/cc79P8pj.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\flyman\LOCALS~1\Temp/cc79P8pj.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\flyman\LOCALS~1\Temp/cc79P8pj.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\flyman\LOCALS~1\Temp/cc79P8pj.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\flyman\LOCALS~1\Temp/cc79P8pj.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\flyman\LOCALS~1\Temp/cc79P8pj.s:18     .text:00000000 timer_init
+C:\DOCUME~1\flyman\LOCALS~1\Temp/cc79P8pj.s:46     .text:0000001a __vector_7
+                            *COM*:00000004 time
+                            *COM*:00000002 stack_watchdog
+                            *COM*:00000001 eth
+C:\DOCUME~1\flyman\LOCALS~1\Temp/cc79P8pj.s:119    .bss:00000000 time_watchdog
+                            *COM*:00000002 buffercounter
+                            *COM*:00000032 usart_rx_buffer
+                            *COM*:00000002 rx_buffer_pointer_in
+                            *COM*:00000002 rx_buffer_pointer_out
+                            *COM*:00000001 usart_status
+                            *COM*:00000014 TCP_PORT_TABLE
+                            *COM*:00000014 UDP_PORT_TABLE
+                            *COM*:0000003c arp_entry
+                            *COM*:00000084 tcp_entry
+                            *COM*:00000001 gp_timer
+
+UNDEFINED SYMBOLS
+__do_clear_bss

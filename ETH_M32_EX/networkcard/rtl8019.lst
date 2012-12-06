@@ -1,0 +1,30 @@
+   1               		.file	"rtl8019.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+  15               	.Ltext0:
+  16               		.comm buffercounter,2,1
+  17               		.comm usart_rx_buffer,50,1
+  18               		.comm rx_buffer_pointer_in,2,1
+  19               		.comm rx_buffer_pointer_out,2,1
+  20               		.comm usart_status,1,1
+  21               	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 rtl8019.c
+C:\DOCUME~1\flyman\LOCALS~1\Temp/cciVoRkg.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\flyman\LOCALS~1\Temp/cciVoRkg.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\flyman\LOCALS~1\Temp/cciVoRkg.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\flyman\LOCALS~1\Temp/cciVoRkg.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\flyman\LOCALS~1\Temp/cciVoRkg.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\flyman\LOCALS~1\Temp/cciVoRkg.s:7      *ABS*:00000001 __zero_reg__
+                            *COM*:00000002 buffercounter
+                            *COM*:00000032 usart_rx_buffer
+                            *COM*:00000002 rx_buffer_pointer_in
+                            *COM*:00000002 rx_buffer_pointer_out
+                            *COM*:00000001 usart_status
+
+UNDEFINED SYMBOLS
+__do_clear_bss

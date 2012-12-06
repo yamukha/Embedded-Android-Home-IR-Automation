@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dip">
+
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:textSize="20sp"
+          android:id="@+id/IP_label" />
+
+          <TextView
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"
+          android:gravity="right"
+          android:textSize="20sp"
+          android:id="@+id/command_label" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dip">
+
+           <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:textSize="20sp"
+           android:id="@+id/battery_label" />
+    </LinearLayout>
+    
+    <LinearLayout
+       android:orientation="horizontal"
+       android:layout_width="fill_parent"
+       android:layout_height="wrap_content"
+       android:padding="10dip">
+
+       <Button
+       android:id="@+id/cmd_get"
+       android:layout_width="fill_parent"
+       android:layout_height="wrap_content"
+        android:layout_gravity="top" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="0.34"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="10dip" >
+
+        <Button
+        android:id="@+id/cmd_decrement"
+        android:gravity="left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp" />
+
+        <TextView
+        android:id="@+id/info_wiev"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:padding="10dip" />
+
+       <Button
+       android:id="@+id/cmd_increment"
+       android:gravity="right"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:textSize="20sp" />
+    </LinearLayout>
+
+     <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="0dip"
+         android:layout_weight="0.34"
+         android:gravity="center"
+         android:orientation="horizontal"
+         android:padding="10dip" >
+
+        <TextView
+        android:id="@+id/option_text"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:padding="10dip" />
+
+    </LinearLayout>    
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="0.34"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="10dip" >
+
+        <Button
+        android:id="@+id/option_decrement"
+        android:gravity="left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        android:textSize="20sp" />
+
+        <TextView
+        android:id="@+id/option_wiev"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:visibility="invisible"
+        android:padding="10dip" />
+
+        <Button
+        android:id="@+id/option_increment"
+        android:gravity="right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        android:textSize="20sp" />
+    </LinearLayout>
+
+    <Button
+    android:id="@+id/cmd_start"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom"
+    />
+</LinearLayout>

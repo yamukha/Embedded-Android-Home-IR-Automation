@@ -1,0 +1,1251 @@
+   1               		.file	"enc28j60.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+  15               	.Ltext0:
+  17               	enc_clrbits_reg:
+  18               	.LFB8:
+  19               	.LM1:
+  20               	.LVL0:
+  21               	/* prologue: function */
+  22               	/* frame size = 0 */
+  23               	.LM2:
+  24 0000 C398      		cbi 56-32,3
+  25               	.LM3:
+  26 0002 8F71      		andi r24,lo8(31)
+  27               	.LVL1:
+  28 0004 806A      		ori r24,lo8(-96)
+  29               	.LBB85:
+  30               	.LBB86:
+  31               	.LM4:
+  32 0006 8FB9      		out 47-32,r24
+  33               	.L2:
+  34               	.LM5:
+  35 0008 779B      		sbis 46-32,7
+  36 000a 00C0      		rjmp .L2
+  37               	.LBE86:
+  38               	.LBE85:
+  39               	.LBB87:
+  40               	.LBB88:
+  41               	.LM6:
+  42 000c 6FB9      		out 47-32,r22
+  43               	.L3:
+  44               	.LM7:
+  45 000e 779B      		sbis 46-32,7
+  46 0010 00C0      		rjmp .L3
+  47               	.LBE88:
+  48               	.LBE87:
+  49               	.LM8:
+  50 0012 C39A      		sbi 56-32,3
+  51               	/* epilogue start */
+  52               	.LM9:
+  53 0014 0895      		ret
+  54               	.LFE8:
+  57               	enc_setbits_reg:
+  58               	.LFB9:
+  59               	.LM10:
+  60               	.LVL2:
+  61               	/* prologue: function */
+  62               	/* frame size = 0 */
+  63               	.LM11:
+  64 0016 C398      		cbi 56-32,3
+  65               	.LM12:
+  66 0018 8F71      		andi r24,lo8(31)
+  67               	.LVL3:
+  68 001a 8068      		ori r24,lo8(-128)
+  69               	.LBB89:
+  70               	.LBB90:
+  71               	.LM13:
+  72 001c 8FB9      		out 47-32,r24
+  73               	.L8:
+  74               	.LM14:
+  75 001e 779B      		sbis 46-32,7
+  76 0020 00C0      		rjmp .L8
+  77               	.LBE90:
+  78               	.LBE89:
+  79               	.LBB91:
+  80               	.LBB92:
+  81               	.LM15:
+  82 0022 6FB9      		out 47-32,r22
+  83               	.L9:
+  84               	.LM16:
+  85 0024 779B      		sbis 46-32,7
+  86 0026 00C0      		rjmp .L9
+  87               	.LBE92:
+  88               	.LBE91:
+  89               	.LM17:
+  90 0028 C39A      		sbi 56-32,3
+  91               	/* epilogue start */
+  92               	.LM18:
+  93 002a 0895      		ret
+  94               	.LFE9:
+  97               	enc_read_reg:
+  98               	.LFB10:
+  99               	.LM19:
+ 100               	.LVL4:
+ 101 002c FF92      		push r15
+ 102 002e 0F93      		push r16
+ 103 0030 1F93      		push r17
+ 104 0032 CF93      		push r28
+ 105 0034 DF93      		push r29
+ 106               	/* prologue: function */
+ 107               	/* frame size = 0 */
+ 108 0036 182F      		mov r17,r24
+ 109               	.LM20:
+ 110 0038 9FE1      		ldi r25,lo8(31)
+ 111 003a F92E      		mov r15,r25
+ 112               	.LVL5:
+ 113 003c F822      		and r15,r24
+ 114               	.LM21:
+ 115 003e 89E1      		ldi r24,lo8(25)
+ 116               	.LVL6:
+ 117 0040 8F15      		cp r24,r15
+ 118 0042 00F0      		brlo .L14
+ 119               	.LBB93:
+ 120               	.LM22:
+ 121 0044 C12F      		mov r28,r17
+ 122 0046 D0E0      		ldi r29,lo8(0)
+ 123 0048 C076      		andi r28,lo8(96)
+ 124 004a D070      		andi r29,hi8(96)
+ 125 004c 85E0      		ldi r24,5
+ 126 004e D595      	1:	asr r29
+ 127 0050 C795      		ror r28
+ 128 0052 8A95      		dec r24
+ 129 0054 01F4      		brne 1b
+ 130 0056 0C2F      		mov r16,r28
+ 131               	.LVL7:
+ 132               	.LM23:
+ 133 0058 8091 0000 		lds r24,enc_cur_bank
+ 134 005c C817      		cp r28,r24
+ 135 005e 01F0      		breq .L14
+ 136               	.LVL8:
+ 137               	.LM24:
+ 138 0060 8FE1      		ldi r24,lo8(31)
+ 139 0062 63E0      		ldi r22,lo8(3)
+ 140 0064 0E94 0000 		call enc_clrbits_reg
+ 141               	.LM25:
+ 142 0068 CC23      		tst r28
+ 143               	.LVL9:
+ 144 006a 01F0      		breq .L15
+ 145               	.LM26:
+ 146 006c 8FE1      		ldi r24,lo8(31)
+ 147 006e 6C2F      		mov r22,r28
+ 148 0070 0E94 0000 		call enc_setbits_reg
+ 149               	.L15:
+ 150               	.LM27:
+ 151 0074 0093 0000 		sts enc_cur_bank,r16
+ 152               	.LVL10:
+ 153               	.L14:
+ 154               	.LBE93:
+ 155               	.LM28:
+ 156 0078 C398      		cbi 56-32,3
+ 157               	.LBB94:
+ 158               	.LBB95:
+ 159               	.LM29:
+ 160 007a FFB8      		out 47-32,r15
+ 161               	.L16:
+ 162               	.LM30:
+ 163 007c 779B      		sbis 46-32,7
+ 164 007e 00C0      		rjmp .L16
+ 165               	.LBE95:
+ 166               	.LBE94:
+ 167               	.LBB96:
+ 168               	.LBB97:
+ 169               	.LM31:
+ 170 0080 1FB8      		out 47-32,__zero_reg__
+ 171               	.L17:
+ 172               	.LM32:
+ 173 0082 779B      		sbis 46-32,7
+ 174 0084 00C0      		rjmp .L17
+ 175               	.LBE97:
+ 176               	.LBE96:
+ 177               	.LM33:
+ 178 0086 17FF      		sbrs r17,7
+ 179 0088 00C0      		rjmp .L18
+ 180               	.LBB98:
+ 181               	.LBB99:
+ 182               	.LM34:
+ 183 008a 1FB8      		out 47-32,__zero_reg__
+ 184               	.L19:
+ 185               	.LM35:
+ 186 008c 779B      		sbis 46-32,7
+ 187 008e 00C0      		rjmp .L19
+ 188               	.L18:
+ 189               	.LBE99:
+ 190               	.LBE98:
+ 191               	.LBB100:
+ 192               	.LBB101:
+ 193               	.LM36:
+ 194 0090 8FB1      		in r24,47-32
+ 195               	.LVL11:
+ 196               	.LBE101:
+ 197               	.LBE100:
+ 198               	.LM37:
+ 199 0092 C39A      		sbi 56-32,3
+ 200               	.LVL12:
+ 201               	/* epilogue start */
+ 202               	.LM38:
+ 203 0094 DF91      		pop r29
+ 204 0096 CF91      		pop r28
+ 205 0098 1F91      		pop r17
+ 206               	.LVL13:
+ 207 009a 0F91      		pop r16
+ 208               	.LVL14:
+ 209 009c FF90      		pop r15
+ 210               	.LVL15:
+ 211 009e 0895      		ret
+ 212               	.LFE10:
+ 215               	enc_write_reg:
+ 216               	.LFB11:
+ 217               	.LM39:
+ 218               	.LVL16:
+ 219 00a0 FF92      		push r15
+ 220 00a2 0F93      		push r16
+ 221 00a4 1F93      		push r17
+ 222 00a6 CF93      		push r28
+ 223 00a8 DF93      		push r29
+ 224               	/* prologue: function */
+ 225               	/* frame size = 0 */
+ 226 00aa F62E      		mov r15,r22
+ 227               	.LM40:
+ 228 00ac 182F      		mov r17,r24
+ 229               	.LVL17:
+ 230 00ae 1F71      		andi r17,lo8(31)
+ 231               	.LM41:
+ 232 00b0 1A31      		cpi r17,lo8(26)
+ 233 00b2 00F4      		brsh .L25
+ 234               	.LVL18:
+ 235               	.LBB102:
+ 236               	.LM42:
+ 237 00b4 C82F      		mov r28,r24
+ 238 00b6 D0E0      		ldi r29,lo8(0)
+ 239 00b8 C076      		andi r28,lo8(96)
+ 240 00ba D070      		andi r29,hi8(96)
+ 241 00bc 25E0      		ldi r18,5
+ 242 00be D595      	1:	asr r29
+ 243 00c0 C795      		ror r28
+ 244 00c2 2A95      		dec r18
+ 245 00c4 01F4      		brne 1b
+ 246 00c6 0C2F      		mov r16,r28
+ 247               	.LVL19:
+ 248               	.LM43:
+ 249 00c8 8091 0000 		lds r24,enc_cur_bank
+ 250               	.LVL20:
+ 251 00cc C817      		cp r28,r24
+ 252 00ce 01F0      		breq .L25
+ 253               	.LVL21:
+ 254               	.LM44:
+ 255 00d0 8FE1      		ldi r24,lo8(31)
+ 256 00d2 63E0      		ldi r22,lo8(3)
+ 257 00d4 0E94 0000 		call enc_clrbits_reg
+ 258               	.LM45:
+ 259 00d8 CC23      		tst r28
+ 260               	.LVL22:
+ 261 00da 01F0      		breq .L26
+ 262               	.LM46:
+ 263 00dc 8FE1      		ldi r24,lo8(31)
+ 264 00de 6C2F      		mov r22,r28
+ 265 00e0 0E94 0000 		call enc_setbits_reg
+ 266               	.L26:
+ 267               	.LM47:
+ 268 00e4 0093 0000 		sts enc_cur_bank,r16
+ 269               	.LVL23:
+ 270               	.L25:
+ 271               	.LBE102:
+ 272               	.LM48:
+ 273 00e8 C398      		cbi 56-32,3
+ 274               	.LM49:
+ 275 00ea 1064      		ori r17,lo8(64)
+ 276               	.LBB103:
+ 277               	.LBB104:
+ 278               	.LM50:
+ 279 00ec 1FB9      		out 47-32,r17
+ 280               	.L27:
+ 281               	.LM51:
+ 282 00ee 779B      		sbis 46-32,7
+ 283 00f0 00C0      		rjmp .L27
+ 284               	.LBE104:
+ 285               	.LBE103:
+ 286               	.LBB105:
+ 287               	.LBB106:
+ 288               	.LM52:
+ 289 00f2 FFB8      		out 47-32,r15
+ 290               	.L28:
+ 291               	.LM53:
+ 292 00f4 779B      		sbis 46-32,7
+ 293 00f6 00C0      		rjmp .L28
+ 294               	.LBE106:
+ 295               	.LBE105:
+ 296               	.LM54:
+ 297 00f8 C39A      		sbi 56-32,3
+ 298               	/* epilogue start */
+ 299               	.LM55:
+ 300 00fa DF91      		pop r29
+ 301 00fc CF91      		pop r28
+ 302 00fe 1F91      		pop r17
+ 303               	.LVL24:
+ 304 0100 0F91      		pop r16
+ 305               	.LVL25:
+ 306 0102 FF90      		pop r15
+ 307               	.LVL26:
+ 308 0104 0895      		ret
+ 309               	.LFE11:
+ 312               	enc_read_buf:
+ 313               	.LFB13:
+ 314               	.LM56:
+ 315               	.LVL27:
+ 316               	/* prologue: function */
+ 317               	/* frame size = 0 */
+ 318 0106 FC01      		movw r30,r24
+ 319               	.LM57:
+ 320 0108 C398      		cbi 56-32,3
+ 321               	.LBB107:
+ 322               	.LBB108:
+ 323               	.LM58:
+ 324 010a 8AE3      		ldi r24,lo8(58)
+ 325               	.LVL28:
+ 326 010c 8FB9      		out 47-32,r24
+ 327               	.L33:
+ 328               	.LM59:
+ 329 010e 779B      		sbis 46-32,7
+ 330 0110 00C0      		rjmp .L33
+ 331 0112 00C0      		rjmp .L40
+ 332               	.LVL29:
+ 333               	.L36:
+ 334               	.LBE108:
+ 335               	.LBE107:
+ 336               	.LBB109:
+ 337               	.LBB110:
+ 338               	.LM60:
+ 339 0114 1FB8      		out 47-32,__zero_reg__
+ 340               	.L35:
+ 341               	.LM61:
+ 342 0116 779B      		sbis 46-32,7
+ 343 0118 00C0      		rjmp .L35
+ 344               	.LBE110:
+ 345               	.LBE109:
+ 346               	.LBB111:
+ 347               	.LBB112:
+ 348               	.LM62:
+ 349 011a 8FB1      		in r24,47-32
+ 350               	.LBE112:
+ 351               	.LBE111:
+ 352               	.LM63:
+ 353 011c 8193      		st Z+,r24
+ 354               	.LM64:
+ 355 011e 6150      		subi r22,lo8(-(-1))
+ 356 0120 7040      		sbci r23,hi8(-(-1))
+ 357               	.L40:
+ 358 0122 6115      		cp r22,__zero_reg__
+ 359 0124 7105      		cpc r23,__zero_reg__
+ 360 0126 01F4      		brne .L36
+ 361               	.LM65:
+ 362 0128 C39A      		sbi 56-32,3
+ 363               	/* epilogue start */
+ 364               	.LM66:
+ 365 012a 0895      		ret
+ 366               	.LFE13:
+ 368               	.global	enc_init
+ 370               	enc_init:
+ 371               	.LFB17:
+ 372               	.LM67:
+ 373 012c EF92      		push r14
+ 374 012e FF92      		push r15
+ 375 0130 0F93      		push r16
+ 376 0132 1F93      		push r17
+ 377 0134 CF93      		push r28
+ 378 0136 DF93      		push r29
+ 379               	/* prologue: function */
+ 380               	/* frame size = 0 */
+ 381               	.LM68:
+ 382 0138 BB9A      		sbi 55-32,3
+ 383               	.LM69:
+ 384 013a C39A      		sbi 56-32,3
+ 385               	.LBB113:
+ 386               	.LBB114:
+ 387               	.LM70:
+ 388 013c 87B3      		in r24,55-32
+ 389 013e 806A      		ori r24,lo8(-96)
+ 390 0140 87BB      		out 55-32,r24
+ 391               	.LM71:
+ 392 0142 C79A      		sbi 56-32,7
+ 393               	.LM72:
+ 394 0144 BE98      		cbi 55-32,6
+ 395               	.LM73:
+ 396 0146 BC9A      		sbi 55-32,4
+ 397               	.LM74:
+ 398 0148 80E5      		ldi r24,lo8(80)
+ 399 014a 8DB9      		out 45-32,r24
+ 400               	.LM75:
+ 401 014c 81E0      		ldi r24,lo8(1)
+ 402 014e 8EB9      		out 46-32,r24
+ 403 0150 80E1      		ldi r24,lo8(10000)
+ 404 0152 97E2      		ldi r25,hi8(10000)
+ 405               	.LVL30:
+ 406               	.L43:
+ 407               	.LBB115:
+ 408               	.LBB116:
+ 409               	.LM76:
+ 410 0154 0197      		sbiw r24,1
+ 411 0156 2FEF      		ldi r18,hi8(-1)
+ 412 0158 8F3F      		cpi r24,lo8(-1)
+ 413 015a 9207      		cpc r25,r18
+ 414 015c 01F0      		breq .L42
+ 415               	.LBB117:
+ 416               	.LM77:
+ 417               	/* #APP */
+ 418               	 ;  148 "networkcard/enc28j60.c" 1
+ 419 015e 0000      		nop
+ 420               	 ;  0 "" 2
+ 421               	 ;  148 "networkcard/enc28j60.c" 1
+ 422 0160 0000      		nop
+ 423               	 ;  0 "" 2
+ 424               	 ;  148 "networkcard/enc28j60.c" 1
+ 425 0162 0000      		nop
+ 426               	 ;  0 "" 2
+ 427               	 ;  148 "networkcard/enc28j60.c" 1
+ 428 0164 0000      		nop
+ 429               	 ;  0 "" 2
+ 430               	/* #NOAPP */
+ 431 0166 00C0      		rjmp .L43
+ 432               	.L42:
+ 433               	.LBE117:
+ 434               	.LBE116:
+ 435               	.LBE115:
+ 436               	.LBE114:
+ 437               	.LBE113:
+ 438               	.LBB118:
+ 439               	.LBB119:
+ 440               	.LM78:
+ 441 0168 C398      		cbi 56-32,3
+ 442               	.LBB120:
+ 443               	.LBB121:
+ 444               	.LM79:
+ 445 016a 8FEF      		ldi r24,lo8(-1)
+ 446               	.LVL31:
+ 447 016c 8FB9      		out 47-32,r24
+ 448               	.L44:
+ 449               	.LM80:
+ 450 016e 779B      		sbis 46-32,7
+ 451 0170 00C0      		rjmp .L44
+ 452               	.LBE121:
+ 453               	.LBE120:
+ 454               	.LM81:
+ 455 0172 C39A      		sbi 56-32,3
+ 456 0174 88EE      		ldi r24,lo8(1000)
+ 457 0176 93E0      		ldi r25,hi8(1000)
+ 458               	.LVL32:
+ 459               	.L46:
+ 460               	.LBB122:
+ 461               	.LBB123:
+ 462               	.LM82:
+ 463 0178 0197      		sbiw r24,1
+ 464 017a AFEF      		ldi r26,hi8(-1)
+ 465 017c 8F3F      		cpi r24,lo8(-1)
+ 466 017e 9A07      		cpc r25,r26
+ 467 0180 01F0      		breq .L57
+ 468               	.LBB124:
+ 469               	.LM83:
+ 470               	/* #APP */
+ 471               	 ;  148 "networkcard/enc28j60.c" 1
+ 472 0182 0000      		nop
+ 473               	 ;  0 "" 2
+ 474               	 ;  148 "networkcard/enc28j60.c" 1
+ 475 0184 0000      		nop
+ 476               	 ;  0 "" 2
+ 477               	 ;  148 "networkcard/enc28j60.c" 1
+ 478 0186 0000      		nop
+ 479               	 ;  0 "" 2
+ 480               	 ;  148 "networkcard/enc28j60.c" 1
+ 481 0188 0000      		nop
+ 482               	 ;  0 "" 2
+ 483               	/* #NOAPP */
+ 484 018a 00C0      		rjmp .L46
+ 485               	.L57:
+ 486               	.LBE124:
+ 487               	.LBE123:
+ 488               	.LBE122:
+ 489               	.LBE119:
+ 490               	.LBE118:
+ 491               	.LM84:
+ 492 018c 8DE1      		ldi r24,lo8(29)
+ 493               	.LVL33:
+ 494 018e 0E94 0000 		call enc_read_reg
+ 495 0192 80FF      		sbrs r24,0
+ 496 0194 00C0      		rjmp .L57
+ 497               	.LM85:
+ 498 0196 82E7      		ldi r24,lo8(114)
+ 499 0198 0E94 0000 		call enc_read_reg
+ 500 019c 8093 0000 		sts enc_revid,r24
+ 501               	.LM86:
+ 502 01a0 00D0      		rcall .
+ 503 01a2 00D0      		rcall .
+ 504 01a4 EDB7      		in r30,__SP_L__
+ 505 01a6 FEB7      		in r31,__SP_H__
+ 506 01a8 3196      		adiw r30,1
+ 507 01aa 20E0      		ldi r18,lo8(__c.1742)
+ 508 01ac 30E0      		ldi r19,hi8(__c.1742)
+ 509 01ae ADB7      		in r26,__SP_L__
+ 510 01b0 BEB7      		in r27,__SP_H__
+ 511 01b2 1296      		adiw r26,1+1
+ 512 01b4 3C93      		st X,r19
+ 513 01b6 2E93      		st -X,r18
+ 514 01b8 1197      		sbiw r26,1
+ 515 01ba 8283      		std Z+2,r24
+ 516 01bc 1382      		std Z+3,__zero_reg__
+ 517 01be 0E94 0000 		call usart_write_P
+ 518               	.LM87:
+ 519 01c2 1092 0000 		sts mymac,__zero_reg__
+ 520               	.LM88:
+ 521 01c6 80E2      		ldi r24,lo8(32)
+ 522 01c8 8093 0000 		sts mymac+1,r24
+ 523               	.LM89:
+ 524 01cc 88E1      		ldi r24,lo8(24)
+ 525 01ce 8093 0000 		sts mymac+2,r24
+ 526               	.LM90:
+ 527 01d2 81EB      		ldi r24,lo8(-79)
+ 528 01d4 8093 0000 		sts mymac+3,r24
+ 529               	.LM91:
+ 530 01d8 85E1      		ldi r24,lo8(21)
+ 531 01da 8093 0000 		sts mymac+4,r24
+ 532               	.LM92:
+ 533 01de 8EE6      		ldi r24,lo8(110)
+ 534 01e0 8093 0000 		sts mymac+5,r24
+ 535 01e4 C0E0      		ldi r28,lo8(0)
+ 536 01e6 D0E0      		ldi r29,hi8(0)
+ 537               	.LVL34:
+ 538 01e8 0F90      		pop __tmp_reg__
+ 539 01ea 0F90      		pop __tmp_reg__
+ 540 01ec 0F90      		pop __tmp_reg__
+ 541 01ee 0F90      		pop __tmp_reg__
+ 542               	.L49:
+ 543               	.LM93:
+ 544 01f0 CE01      		movw r24,r28
+ 545               	.LBB125:
+ 546               	.LM94:
+ 547 01f2 FE01      		movw r30,r28
+ 548 01f4 E050      		subi r30,lo8(-(enc_configdata))
+ 549 01f6 F040      		sbci r31,hi8(-(enc_configdata))
+ 550               	/* #APP */
+ 551               	 ;  607 "networkcard/enc28j60.c" 1
+ 552 01f8 2491      		lpm r18, Z
+ 553               		
+ 554               	 ;  0 "" 2
+ 555               	.LVL35:
+ 556               	/* #NOAPP */
+ 557 01fa 2296      		adiw r28,2
+ 558               	.LBE125:
+ 559               	.LBB126:
+ 560               	.LM95:
+ 561 01fc 8050      		subi r24,lo8(-(enc_configdata+1))
+ 562 01fe 9040      		sbci r25,hi8(-(enc_configdata+1))
+ 563 0200 FC01      		movw r30,r24
+ 564               	/* #APP */
+ 565               	 ;  608 "networkcard/enc28j60.c" 1
+ 566 0202 6491      		lpm r22, Z
+ 567               		
+ 568               	 ;  0 "" 2
+ 569               	.LVL36:
+ 570               	/* #NOAPP */
+ 571               	.LBE126:
+ 572               	.LM96:
+ 573 0204 2F3F      		cpi r18,lo8(-1)
+ 574 0206 01F4      		brne .L47
+ 575 0208 6F3F      		cpi r22,lo8(-1)
+ 576 020a 01F0      		breq .L48
+ 577               	.L47:
+ 578               	.LM97:
+ 579 020c 822F      		mov r24,r18
+ 580 020e 0E94 0000 		call enc_write_reg
+ 581               	.LVL37:
+ 582 0212 00C0      		rjmp .L49
+ 583               	.LVL38:
+ 584               	.L48:
+ 585               	.LM98:
+ 586 0214 C050      		subi r28,lo8(-(enc_configdata))
+ 587 0216 D040      		sbci r29,hi8(-(enc_configdata))
+ 588               	.LVL39:
+ 589               	.L54:
+ 590               	.LBB127:
+ 591               	.LM99:
+ 592 0218 FE01      		movw r30,r28
+ 593               	/* #APP */
+ 594               	 ;  614 "networkcard/enc28j60.c" 1
+ 595 021a 6491      		lpm r22, Z
+ 596               		
+ 597               	 ;  0 "" 2
+ 598               	.LVL40:
+ 599               	/* #NOAPP */
+ 600               	.LBE127:
+ 601               	.LBB128:
+ 602               	.LM100:
+ 603 021c 2196      		adiw r28,1
+ 604 021e FE01      		movw r30,r28
+ 605               	/* #APP */
+ 606               	 ;  615 "networkcard/enc28j60.c" 1
+ 607 0220 8491      		lpm r24, Z
+ 608               		
+ 609               	 ;  0 "" 2
+ 610               	.LVL41:
+ 611               	/* #NOAPP */
+ 612 0222 2197      		sbiw r28,1
+ 613               	.LBE128:
+ 614               	.LM101:
+ 615 0224 6F3F      		cpi r22,lo8(-1)
+ 616 0226 01F4      		brne .L50
+ 617 0228 8F3F      		cpi r24,lo8(-1)
+ 618 022a 01F0      		breq .L51
+ 619               	.L50:
+ 620               	.LM102:
+ 621 022c F82E      		mov r15,r24
+ 622               	.LVL42:
+ 623 022e EE24      		clr r14
+ 624               	.LVL43:
+ 625               	.LBB129:
+ 626               	.LM103:
+ 627 0230 2296      		adiw r28,2
+ 628 0232 FE01      		movw r30,r28
+ 629               	/* #APP */
+ 630               	 ;  618 "networkcard/enc28j60.c" 1
+ 631 0234 0491      		lpm r16, Z
+ 632               		
+ 633               	 ;  0 "" 2
+ 634               	.LVL44:
+ 635               	/* #NOAPP */
+ 636 0236 2297      		sbiw r28,2
+ 637               	.LBE129:
+ 638               	.LM104:
+ 639 0238 10E0      		ldi r17,lo8(0)
+ 640               	.LVL45:
+ 641 023a 0E29      		or r16,r14
+ 642 023c 1F29      		or r17,r15
+ 643               	.LVL46:
+ 644               	.LBB130:
+ 645               	.LBB131:
+ 646               	.LM105:
+ 647 023e 84ED      		ldi r24,lo8(-44)
+ 648               	.LVL47:
+ 649 0240 0E94 0000 		call enc_write_reg
+ 650               	.LVL48:
+ 651               	.LM106:
+ 652 0244 86ED      		ldi r24,lo8(-42)
+ 653 0246 602F      		mov r22,r16
+ 654 0248 0E94 0000 		call enc_write_reg
+ 655               	.LM107:
+ 656 024c 87ED      		ldi r24,lo8(-41)
+ 657 024e 612F      		mov r22,r17
+ 658 0250 0E94 0000 		call enc_write_reg
+ 659 0254 8AE0      		ldi r24,lo8(10)
+ 660 0256 90E0      		ldi r25,hi8(10)
+ 661               	.LVL49:
+ 662               	.L53:
+ 663               	.LBB132:
+ 664               	.LBB133:
+ 665               	.LM108:
+ 666 0258 0197      		sbiw r24,1
+ 667 025a FFEF      		ldi r31,hi8(-1)
+ 668 025c 8F3F      		cpi r24,lo8(-1)
+ 669 025e 9F07      		cpc r25,r31
+ 670 0260 01F0      		breq .L56
+ 671               	.LBB134:
+ 672               	.LM109:
+ 673               	/* #APP */
+ 674               	 ;  148 "networkcard/enc28j60.c" 1
+ 675 0262 0000      		nop
+ 676               	 ;  0 "" 2
+ 677               	 ;  148 "networkcard/enc28j60.c" 1
+ 678 0264 0000      		nop
+ 679               	 ;  0 "" 2
+ 680               	 ;  148 "networkcard/enc28j60.c" 1
+ 681 0266 0000      		nop
+ 682               	 ;  0 "" 2
+ 683               	 ;  148 "networkcard/enc28j60.c" 1
+ 684 0268 0000      		nop
+ 685               	 ;  0 "" 2
+ 686               	/* #NOAPP */
+ 687 026a 00C0      		rjmp .L53
+ 688               	.L56:
+ 689               	.LBE134:
+ 690               	.LBE133:
+ 691               	.LBE132:
+ 692               	.LBE131:
+ 693               	.LM110:
+ 694 026c 8AEE      		ldi r24,lo8(-22)
+ 695               	.LVL50:
+ 696 026e 0E94 0000 		call enc_read_reg
+ 697 0272 80FD      		sbrc r24,0
+ 698 0274 00C0      		rjmp .L56
+ 699 0276 2396      		adiw r28,3
+ 700 0278 00C0      		rjmp .L54
+ 701               	.LVL51:
+ 702               	.L51:
+ 703               	.LBE130:
+ 704               	.LM111:
+ 705 027a 1092 0000 		sts (enc_next_packet_ptr)+1,__zero_reg__
+ 706 027e 1092 0000 		sts enc_next_packet_ptr,__zero_reg__
+ 707               	.LM112:
+ 708 0282 8BE1      		ldi r24,lo8(27)
+ 709               	.LVL52:
+ 710 0284 60EC      		ldi r22,lo8(-64)
+ 711               	.LVL53:
+ 712 0286 0E94 0000 		call enc_write_reg
+ 713               	.LVL54:
+ 714               	.LM113:
+ 715 028a 8FE1      		ldi r24,lo8(31)
+ 716 028c 64E0      		ldi r22,lo8(4)
+ 717 028e 0E94 0000 		call enc_setbits_reg
+ 718               	/* epilogue start */
+ 719               	.LM114:
+ 720 0292 DF91      		pop r29
+ 721 0294 CF91      		pop r28
+ 722 0296 1F91      		pop r17
+ 723               	.LVL55:
+ 724 0298 0F91      		pop r16
+ 725               	.LVL56:
+ 726 029a FF90      		pop r15
+ 727 029c EF90      		pop r14
+ 728 029e 0895      		ret
+ 729               	.LFE17:
+ 731               	.global	enc_receive_packet
+ 733               	enc_receive_packet:
+ 734               	.LFB16:
+ 735               	.LM115:
+ 736               	.LVL57:
+ 737 02a0 CF92      		push r12
+ 738 02a2 DF92      		push r13
+ 739 02a4 EF92      		push r14
+ 740 02a6 FF92      		push r15
+ 741 02a8 0F93      		push r16
+ 742 02aa 1F93      		push r17
+ 743 02ac DF93      		push r29
+ 744 02ae CF93      		push r28
+ 745 02b0 00D0      		rcall .
+ 746 02b2 00D0      		rcall .
+ 747 02b4 00D0      		rcall .
+ 748 02b6 CDB7      		in r28,__SP_L__
+ 749 02b8 DEB7      		in r29,__SP_H__
+ 750               	/* prologue: function */
+ 751               	/* frame size = 6 */
+ 752 02ba 7C01      		movw r14,r24
+ 753 02bc 6B01      		movw r12,r22
+ 754               	.LM116:
+ 755 02be 89E3      		ldi r24,lo8(57)
+ 756               	.LVL58:
+ 757 02c0 0E94 0000 		call enc_read_reg
+ 758               	.LVL59:
+ 759               	.LM117:
+ 760 02c4 8823      		tst r24
+ 761 02c6 01F4      		brne .L62
+ 762 02c8 00E0      		ldi r16,lo8(0)
+ 763 02ca 10E0      		ldi r17,hi8(0)
+ 764               	.LVL60:
+ 765 02cc 00C0      		rjmp .L63
+ 766               	.LVL61:
+ 767               	.L62:
+ 768               	.LM118:
+ 769 02ce 6091 0000 		lds r22,enc_next_packet_ptr
+ 770 02d2 7091 0000 		lds r23,(enc_next_packet_ptr)+1
+ 771 02d6 80E0      		ldi r24,lo8(0)
+ 772 02d8 0E94 0000 		call enc_write_reg
+ 773               	.LM119:
+ 774 02dc 2091 0000 		lds r18,enc_next_packet_ptr
+ 775 02e0 3091 0000 		lds r19,(enc_next_packet_ptr)+1
+ 776 02e4 81E0      		ldi r24,lo8(1)
+ 777 02e6 632F      		mov r22,r19
+ 778 02e8 0E94 0000 		call enc_write_reg
+ 779               	.LM120:
+ 780 02ec CE01      		movw r24,r28
+ 781 02ee 0196      		adiw r24,1
+ 782 02f0 66E0      		ldi r22,lo8(6)
+ 783 02f2 70E0      		ldi r23,hi8(6)
+ 784 02f4 0E94 0000 		call enc_read_buf
+ 785               	.LM121:
+ 786 02f8 8981      		ldd r24,Y+1
+ 787 02fa 90E0      		ldi r25,lo8(0)
+ 788 02fc 9093 0000 		sts (enc_next_packet_ptr)+1,r25
+ 789 0300 8093 0000 		sts enc_next_packet_ptr,r24
+ 790               	.LM122:
+ 791 0304 2091 0000 		lds r18,enc_next_packet_ptr
+ 792 0308 3091 0000 		lds r19,(enc_next_packet_ptr)+1
+ 793 030c 9A81      		ldd r25,Y+2
+ 794 030e 80E0      		ldi r24,lo8(0)
+ 795 0310 822B      		or r24,r18
+ 796 0312 932B      		or r25,r19
+ 797 0314 9093 0000 		sts (enc_next_packet_ptr)+1,r25
+ 798 0318 8093 0000 		sts enc_next_packet_ptr,r24
+ 799               	.LM123:
+ 800 031c 8B81      		ldd r24,Y+3
+ 801 031e 082F      		mov r16,r24
+ 802               	.LVL62:
+ 803 0320 10E0      		ldi r17,lo8(0)
+ 804               	.LVL63:
+ 805               	.LM124:
+ 806 0322 9C81      		ldd r25,Y+4
+ 807 0324 80E0      		ldi r24,lo8(0)
+ 808 0326 082B      		or r16,r24
+ 809 0328 192B      		or r17,r25
+ 810               	.LVL64:
+ 811               	.LM125:
+ 812 032a 8D81      		ldd r24,Y+5
+ 813 032c 282F      		mov r18,r24
+ 814               	.LVL65:
+ 815 032e 30E0      		ldi r19,lo8(0)
+ 816               	.LVL66:
+ 817               	.LM126:
+ 818 0330 9E81      		ldd r25,Y+6
+ 819 0332 80E0      		ldi r24,lo8(0)
+ 820 0334 282B      		or r18,r24
+ 821 0336 392B      		or r19,r25
+ 822               	.LVL67:
+ 823               	.LM127:
+ 824 0338 27FF      		sbrs r18,7
+ 825 033a 00C0      		rjmp .L64
+ 826 033c 37FD      		sbrc r19,7
+ 827 033e 00C0      		rjmp .L64
+ 828 0340 E016      		cp r14,r16
+ 829 0342 F106      		cpc r15,r17
+ 830 0344 00F4      		brsh .L65
+ 831               	.L64:
+ 832               	.LM128:
+ 833 0346 0E94 0000 		call enc_init
+ 834               	.LVL68:
+ 835               	.L65:
+ 836               	.LM129:
+ 837 034a 0450      		subi r16,lo8(-(-4))
+ 838 034c 1040      		sbci r17,hi8(-(-4))
+ 839               	.LVL69:
+ 840 034e E016      		cp r14,r16
+ 841 0350 F106      		cpc r15,r17
+ 842 0352 00F4      		brsh .L66
+ 843 0354 8701      		movw r16,r14
+ 844               	.L66:
+ 845               	.LM130:
+ 846 0356 C601      		movw r24,r12
+ 847 0358 B801      		movw r22,r16
+ 848 035a 0E94 0000 		call enc_read_buf
+ 849               	.LVL70:
+ 850               	.LM131:
+ 851 035e 8091 0000 		lds r24,enc_next_packet_ptr
+ 852 0362 9091 0000 		lds r25,(enc_next_packet_ptr)+1
+ 853 0366 0197      		sbiw r24,1
+ 854 0368 8050      		subi r24,lo8(6656)
+ 855 036a 9A41      		sbci r25,hi8(6656)
+ 856 036c 00F4      		brsh .L67
+ 857 036e 8091 0000 		lds r24,enc_next_packet_ptr
+ 858 0372 9091 0000 		lds r25,(enc_next_packet_ptr)+1
+ 859               	.LM132:
+ 860 0376 6091 0000 		lds r22,enc_next_packet_ptr
+ 861 037a 7091 0000 		lds r23,(enc_next_packet_ptr)+1
+ 862 037e 6150      		subi r22,lo8(-(-1))
+ 863 0380 8CE0      		ldi r24,lo8(12)
+ 864 0382 0E94 0000 		call enc_write_reg
+ 865               	.LM133:
+ 866 0386 2091 0000 		lds r18,enc_next_packet_ptr
+ 867 038a 3091 0000 		lds r19,(enc_next_packet_ptr)+1
+ 868 038e 2150      		subi r18,lo8(-(-1))
+ 869 0390 3040      		sbci r19,hi8(-(-1))
+ 870 0392 8DE0      		ldi r24,lo8(13)
+ 871 0394 632F      		mov r22,r19
+ 872 0396 00C0      		rjmp .L70
+ 873               	.L67:
+ 874               	.LM134:
+ 875 0398 8CE0      		ldi r24,lo8(12)
+ 876 039a 6FEF      		ldi r22,lo8(-1)
+ 877 039c 0E94 0000 		call enc_write_reg
+ 878               	.LM135:
+ 879 03a0 8DE0      		ldi r24,lo8(13)
+ 880 03a2 69E1      		ldi r22,lo8(25)
+ 881               	.L70:
+ 882 03a4 0E94 0000 		call enc_write_reg
+ 883               	.LM136:
+ 884 03a8 8EE1      		ldi r24,lo8(30)
+ 885 03aa 60E4      		ldi r22,lo8(64)
+ 886 03ac 0E94 0000 		call enc_setbits_reg
+ 887               	.L63:
+ 888               	.LM137:
+ 889 03b0 C801      		movw r24,r16
+ 890               	.LVL71:
+ 891               	/* epilogue start */
+ 892 03b2 2696      		adiw r28,6
+ 893 03b4 0FB6      		in __tmp_reg__,__SREG__
+ 894 03b6 F894      		cli
+ 895 03b8 DEBF      		out __SP_H__,r29
+ 896 03ba 0FBE      		out __SREG__,__tmp_reg__
+ 897 03bc CDBF      		out __SP_L__,r28
+ 898 03be CF91      		pop r28
+ 899 03c0 DF91      		pop r29
+ 900 03c2 1F91      		pop r17
+ 901               	.LVL72:
+ 902 03c4 0F91      		pop r16
+ 903 03c6 FF90      		pop r15
+ 904 03c8 EF90      		pop r14
+ 905               	.LVL73:
+ 906 03ca DF90      		pop r13
+ 907 03cc CF90      		pop r12
+ 908               	.LVL74:
+ 909 03ce 0895      		ret
+ 910               	.LFE16:
+ 912               	.global	enc_send_packet
+ 914               	enc_send_packet:
+ 915               	.LFB15:
+ 916               	.LM138:
+ 917               	.LVL75:
+ 918 03d0 CF92      		push r12
+ 919 03d2 DF92      		push r13
+ 920 03d4 EF92      		push r14
+ 921 03d6 FF92      		push r15
+ 922 03d8 0F93      		push r16
+ 923 03da 1F93      		push r17
+ 924 03dc DF93      		push r29
+ 925 03de CF93      		push r28
+ 926 03e0 0F92      		push __tmp_reg__
+ 927 03e2 CDB7      		in r28,__SP_L__
+ 928 03e4 DEB7      		in r29,__SP_H__
+ 929               	/* prologue: function */
+ 930               	/* frame size = 1 */
+ 931 03e6 7C01      		movw r14,r24
+ 932 03e8 6B01      		movw r12,r22
+ 933               	.LM139:
+ 934 03ea 1982      		std Y+1,__zero_reg__
+ 935               	.LVL76:
+ 936               	.LM140:
+ 937 03ec 00D0      		rcall .
+ 938 03ee 00D0      		rcall .
+ 939 03f0 80E0      		ldi r24,lo8(__c.1667)
+ 940 03f2 90E0      		ldi r25,hi8(__c.1667)
+ 941               	.LVL77:
+ 942 03f4 EDB7      		in r30,__SP_L__
+ 943 03f6 FEB7      		in r31,__SP_H__
+ 944 03f8 9283      		std Z+2,r25
+ 945 03fa 8183      		std Z+1,r24
+ 946 03fc F482      		std Z+4,r15
+ 947 03fe E382      		std Z+3,r14
+ 948 0400 0E94 0000 		call usart_write_P
+ 949               	.LVL78:
+ 950 0404 04E6      		ldi r16,lo8(100)
+ 951 0406 10E0      		ldi r17,hi8(100)
+ 952               	.LVL79:
+ 953 0408 0F90      		pop __tmp_reg__
+ 954 040a 0F90      		pop __tmp_reg__
+ 955 040c 0F90      		pop __tmp_reg__
+ 956 040e 0F90      		pop __tmp_reg__
+ 957 0410 00C0      		rjmp .L72
+ 958               	.LVL80:
+ 959               	.L75:
+ 960               	.LM141:
+ 961 0412 8FE1      		ldi r24,lo8(31)
+ 962               	.LVL81:
+ 963 0414 0E94 0000 		call enc_read_reg
+ 964 0418 83FF      		sbrs r24,3
+ 965 041a 00C0      		rjmp .L73
+ 966 041c 88EE      		ldi r24,lo8(1000)
+ 967 041e 93E0      		ldi r25,hi8(1000)
+ 968               	.LVL82:
+ 969               	.L74:
+ 970               	.LBB135:
+ 971               	.LBB136:
+ 972               	.LM142:
+ 973 0420 0197      		sbiw r24,1
+ 974 0422 FFEF      		ldi r31,hi8(-1)
+ 975 0424 8F3F      		cpi r24,lo8(-1)
+ 976 0426 9F07      		cpc r25,r31
+ 977 0428 01F0      		breq .L72
+ 978               	.LBB137:
+ 979               	.LM143:
+ 980               	/* #APP */
+ 981               	 ;  148 "networkcard/enc28j60.c" 1
+ 982 042a 0000      		nop
+ 983               	 ;  0 "" 2
+ 984               	 ;  148 "networkcard/enc28j60.c" 1
+ 985 042c 0000      		nop
+ 986               	 ;  0 "" 2
+ 987               	 ;  148 "networkcard/enc28j60.c" 1
+ 988 042e 0000      		nop
+ 989               	 ;  0 "" 2
+ 990               	 ;  148 "networkcard/enc28j60.c" 1
+ 991 0430 0000      		nop
+ 992               	 ;  0 "" 2
+ 993               	/* #NOAPP */
+ 994 0432 00C0      		rjmp .L74
+ 995               	.L72:
+ 996               	.LBE137:
+ 997               	.LBE136:
+ 998               	.LBE135:
+ 999               	.LM144:
+ 1000 0434 0150      		subi r16,lo8(-(-1))
+ 1001 0436 1040      		sbci r17,hi8(-(-1))
+ 1002 0438 2FEF      		ldi r18,hi8(-1)
+ 1003 043a 0F3F      		cpi r16,lo8(-1)
+ 1004 043c 1207      		cpc r17,r18
+ 1005 043e 01F4      		brne .L75
+ 1006               	.L73:
+ 1007               	.LM145:
+ 1008 0440 8FE1      		ldi r24,lo8(31)
+ 1009               	.LVL83:
+ 1010 0442 0E94 0000 		call enc_read_reg
+ 1011 0446 83FF      		sbrs r24,3
+ 1012 0448 00C0      		rjmp .L76
+ 1013               	.LM146:
+ 1014 044a 00D0      		rcall .
+ 1015 044c 80E0      		ldi r24,lo8(__c.1672)
+ 1016 044e 90E0      		ldi r25,hi8(__c.1672)
+ 1017 0450 EDB7      		in r30,__SP_L__
+ 1018 0452 FEB7      		in r31,__SP_H__
+ 1019 0454 9283      		std Z+2,r25
+ 1020 0456 8183      		std Z+1,r24
+ 1021 0458 0E94 0000 		call usart_write_P
+ 1022               	.LM147:
+ 1023 045c 0F90      		pop __tmp_reg__
+ 1024 045e 0F90      		pop __tmp_reg__
+ 1025 0460 8FE1      		ldi r24,lo8(31)
+ 1026 0462 60E8      		ldi r22,lo8(-128)
+ 1027 0464 0E94 0000 		call enc_setbits_reg
+ 1028               	.LM148:
+ 1029 0468 8FE1      		ldi r24,lo8(31)
+ 1030 046a 60E8      		ldi r22,lo8(-128)
+ 1031 046c 0E94 0000 		call enc_clrbits_reg
+ 1032               	.L76:
+ 1033               	.LM149:
+ 1034 0470 82E0      		ldi r24,lo8(2)
+ 1035 0472 60E0      		ldi r22,lo8(0)
+ 1036 0474 0E94 0000 		call enc_write_reg
+ 1037               	.LM150:
+ 1038 0478 83E0      		ldi r24,lo8(3)
+ 1039 047a 6AE1      		ldi r22,lo8(26)
+ 1040 047c 0E94 0000 		call enc_write_reg
+ 1041               	.LM151:
+ 1042 0480 86E0      		ldi r24,lo8(6)
+ 1043 0482 6E2D      		mov r22,r14
+ 1044 0484 0E94 0000 		call enc_write_reg
+ 1045               	.LM152:
+ 1046 0488 9701      		movw r18,r14
+ 1047 048a 2050      		subi r18,lo8(-(6656))
+ 1048 048c 364E      		sbci r19,hi8(-(6656))
+ 1049 048e 87E0      		ldi r24,lo8(7)
+ 1050 0490 632F      		mov r22,r19
+ 1051 0492 0E94 0000 		call enc_write_reg
+ 1052               	.LBB138:
+ 1053               	.LBB139:
+ 1054               	.LM153:
+ 1055 0496 C398      		cbi 56-32,3
+ 1056               	.LBB140:
+ 1057               	.LBB141:
+ 1058               	.LM154:
+ 1059 0498 8AE7      		ldi r24,lo8(122)
+ 1060 049a 8FB9      		out 47-32,r24
+ 1061               	.L77:
+ 1062               	.LM155:
+ 1063 049c 779B      		sbis 46-32,7
+ 1064 049e 00C0      		rjmp .L77
+ 1065               	.LBE141:
+ 1066               	.LBE140:
+ 1067               	.LM156:
+ 1068 04a0 8981      		ldd r24,Y+1
+ 1069               	.LBB142:
+ 1070               	.LBB143:
+ 1071               	.LM157:
+ 1072 04a2 8FB9      		out 47-32,r24
+ 1073               	.L78:
+ 1074               	.LM158:
+ 1075 04a4 779B      		sbis 46-32,7
+ 1076 04a6 00C0      		rjmp .L78
+ 1077               	.LBE143:
+ 1078               	.LBE142:
+ 1079               	.LM159:
+ 1080 04a8 C39A      		sbi 56-32,3
+ 1081               	.LBE139:
+ 1082               	.LBE138:
+ 1083               	.LBB144:
+ 1084               	.LBB145:
+ 1085               	.LM160:
+ 1086 04aa C398      		cbi 56-32,3
+ 1087               	.LBB146:
+ 1088               	.LBB147:
+ 1089               	.LM161:
+ 1090 04ac 8AE7      		ldi r24,lo8(122)
+ 1091 04ae 8FB9      		out 47-32,r24
+ 1092               	.L79:
+ 1093               	.LM162:
+ 1094 04b0 779B      		sbis 46-32,7
+ 1095 04b2 00C0      		rjmp .L79
+ 1096 04b4 00C0      		rjmp .L89
+ 1097               	.L82:
+ 1098               	.LBE147:
+ 1099               	.LBE146:
+ 1100               	.LM163:
+ 1101 04b6 F601      		movw r30,r12
+ 1102 04b8 8081      		ld r24,Z
+ 1103               	.LBB148:
+ 1104               	.LBB149:
+ 1105               	.LM164:
+ 1106 04ba 8FB9      		out 47-32,r24
+ 1107               	.L81:
+ 1108               	.LM165:
+ 1109 04bc 779B      		sbis 46-32,7
+ 1110 04be 00C0      		rjmp .L81
+ 1111               	.LBE149:
+ 1112               	.LBE148:
+ 1113               	.LM166:
+ 1114 04c0 0894      		sec
+ 1115 04c2 E108      		sbc r14,__zero_reg__
+ 1116 04c4 F108      		sbc r15,__zero_reg__
+ 1117 04c6 0894      		sec
+ 1118 04c8 C11C      		adc r12,__zero_reg__
+ 1119 04ca D11C      		adc r13,__zero_reg__
+ 1120               	.L89:
+ 1121 04cc E114      		cp r14,__zero_reg__
+ 1122 04ce F104      		cpc r15,__zero_reg__
+ 1123 04d0 01F4      		brne .L82
+ 1124               	.LM167:
+ 1125 04d2 C39A      		sbi 56-32,3
+ 1126               	.LBE145:
+ 1127               	.LBE144:
+ 1128               	.LM168:
+ 1129 04d4 8CE1      		ldi r24,lo8(28)
+ 1130 04d6 68E0      		ldi r22,lo8(8)
+ 1131 04d8 0E94 0000 		call enc_clrbits_reg
+ 1132               	.LM169:
+ 1133 04dc 8FE1      		ldi r24,lo8(31)
+ 1134 04de 68E0      		ldi r22,lo8(8)
+ 1135 04e0 0E94 0000 		call enc_setbits_reg
+ 1136               	/* epilogue start */
+ 1137               	.LM170:
+ 1138 04e4 0F90      		pop __tmp_reg__
+ 1139 04e6 CF91      		pop r28
+ 1140 04e8 DF91      		pop r29
+ 1141 04ea 1F91      		pop r17
+ 1142 04ec 0F91      		pop r16
+ 1143               	.LVL84:
+ 1144 04ee FF90      		pop r15
+ 1145 04f0 EF90      		pop r14
+ 1146               	.LVL85:
+ 1147 04f2 DF90      		pop r13
+ 1148 04f4 CF90      		pop r12
+ 1149               	.LVL86:
+ 1150 04f6 0895      		ret
+ 1151               	.LFE15:
+ 1153               	.global	enc_revid
+ 1154               	.global	enc_revid
+ 1155               		.section .bss
+ 1158               	enc_revid:
+ 1159 0000 00        		.skip 1,0
+ 1160               		.section	.progmem.data,"a",@progbits
+ 1163               	enc_configdata:
+ 1164 0000 04        		.byte	4
+ 1165 0001 00        		.byte	0
+ 1166 0002 05        		.byte	5
+ 1167 0003 1A        		.byte	26
+ 1168 0004 06        		.byte	6
+ 1169 0005 FF        		.byte	-1
+ 1170 0006 07        		.byte	7
+ 1171 0007 1F        		.byte	31
+ 1172 0008 08        		.byte	8
+ 1173 0009 00        		.byte	0
+ 1174 000a 09        		.byte	9
+ 1175 000b 00        		.byte	0
+ 1176 000c 0A        		.byte	10
+ 1177 000d FF        		.byte	-1
+ 1178 000e 0B        		.byte	11
+ 1179 000f 19        		.byte	25
+ 1180 0010 C1        		.byte	-63
+ 1181 0011 00        		.byte	0
+ 1182 0012 C0        		.byte	-64
+ 1183 0013 0D        		.byte	13
+ 1184 0014 C2        		.byte	-62
+ 1185 0015 33        		.byte	51
+ 1186 0016 CA        		.byte	-54
+ 1187 0017 EE        		.byte	-18
+ 1188 0018 CB        		.byte	-53
+ 1189 0019 05        		.byte	5
+ 1190 001a C4        		.byte	-60
+ 1191 001b 15        		.byte	21
+ 1192 001c C6        		.byte	-58
+ 1193 001d 12        		.byte	18
+ 1194 001e E4        		.byte	-28
+ 1195 001f 00        		.byte	0
+ 1196 0020 E5        		.byte	-27
+ 1197 0021 20        		.byte	32
+ 1198 0022 E2        		.byte	-30
+ 1199 0023 18        		.byte	24
+ 1200 0024 E3        		.byte	-29
+ 1201 0025 B1        		.byte	-79
+ 1202 0026 E0        		.byte	-32
+ 1203 0027 15        		.byte	21
+ 1204 0028 E1        		.byte	-31
+ 1205 0029 6E        		.byte	110
+ 1206 002a 75        		.byte	117
+ 1207 002b 00        		.byte	0
+ 1208 002c FF        		.byte	-1
+ 1209 002d FF        		.byte	-1
+ 1210 002e 00        		.byte	0
+ 1211 002f 01        		.byte	1
+ 1212 0030 00        		.byte	0
+ 1213 0031 14        		.byte	20
+ 1214 0032 07        		.byte	7
+ 1215 0033 42        		.byte	66
+ 1216 0034 FF        		.byte	-1
+ 1217 0035 FF        		.byte	-1
+ 1218               		.lcomm enc_next_packet_ptr,2
+ 1221               	__c.1742:
+ 1222 0036 656E 6320 		.string	"enc revid %x\n"
+ 1222      7265 7669 
+ 1222      6420 2578 
+ 1222      0A00 
+ 1223               		.lcomm enc_cur_bank,1
+ 1226               	__c.1672:
+ 1227 0044 656E 635F 		.string	"enc_send: reset tx logic\n"
+ 1227      7365 6E64 
+ 1227      3A20 7265 
+ 1227      7365 7420 
+ 1227      7478 206C 
+ 1230               	__c.1667:
+ 1231 005e 656E 635F 		.string	"enc_send: %i bytes\n"
+ 1231      7365 6E64 
+ 1231      3A20 2569 
+ 1231      2062 7974 
+ 1231      6573 0A00 
+ 1232               		.comm buffercounter,2,1
+ 1233               		.comm usart_rx_buffer,50,1
+ 1234               		.comm rx_buffer_pointer_in,2,1
+ 1235               		.comm rx_buffer_pointer_out,2,1
+ 1236               		.comm usart_status,1,1
+ 1237               		.comm mymac,6,1
+ 1238               		.comm myLAN,6,1
+ 1319               	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 enc28j60.c
+C:\DOCUME~1\flyman\LOCALS~1\Temp/ccX6pThH.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\flyman\LOCALS~1\Temp/ccX6pThH.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\flyman\LOCALS~1\Temp/ccX6pThH.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\flyman\LOCALS~1\Temp/ccX6pThH.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\flyman\LOCALS~1\Temp/ccX6pThH.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\flyman\LOCALS~1\Temp/ccX6pThH.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\flyman\LOCALS~1\Temp/ccX6pThH.s:17     .text:00000000 enc_clrbits_reg
+C:\DOCUME~1\flyman\LOCALS~1\Temp/ccX6pThH.s:57     .text:00000016 enc_setbits_reg
+C:\DOCUME~1\flyman\LOCALS~1\Temp/ccX6pThH.s:97     .text:0000002c enc_read_reg
+C:\DOCUME~1\flyman\LOCALS~1\Temp/ccX6pThH.s:1218   .bss:00000003 enc_cur_bank
+C:\DOCUME~1\flyman\LOCALS~1\Temp/ccX6pThH.s:215    .text:000000a0 enc_write_reg
+C:\DOCUME~1\flyman\LOCALS~1\Temp/ccX6pThH.s:312    .text:00000106 enc_read_buf
+C:\DOCUME~1\flyman\LOCALS~1\Temp/ccX6pThH.s:370    .text:0000012c enc_init
+C:\DOCUME~1\flyman\LOCALS~1\Temp/ccX6pThH.s:1158   .bss:00000000 enc_revid
+C:\DOCUME~1\flyman\LOCALS~1\Temp/ccX6pThH.s:1221   .progmem.data:00000036 __c.1742
+                            *COM*:00000006 mymac
+C:\DOCUME~1\flyman\LOCALS~1\Temp/ccX6pThH.s:1163   .progmem.data:00000000 enc_configdata
+                             .bss:00000001 enc_next_packet_ptr
+C:\DOCUME~1\flyman\LOCALS~1\Temp/ccX6pThH.s:733    .text:000002a0 enc_receive_packet
+C:\DOCUME~1\flyman\LOCALS~1\Temp/ccX6pThH.s:914    .text:000003d0 enc_send_packet
+C:\DOCUME~1\flyman\LOCALS~1\Temp/ccX6pThH.s:1230   .progmem.data:0000005e __c.1667
+C:\DOCUME~1\flyman\LOCALS~1\Temp/ccX6pThH.s:1226   .progmem.data:00000044 __c.1672
+                            *COM*:00000002 buffercounter
+                            *COM*:00000032 usart_rx_buffer
+                            *COM*:00000002 rx_buffer_pointer_in
+                            *COM*:00000002 rx_buffer_pointer_out
+                            *COM*:00000001 usart_status
+                            *COM*:00000006 myLAN
+
+UNDEFINED SYMBOLS
+usart_write_P
+__do_clear_bss

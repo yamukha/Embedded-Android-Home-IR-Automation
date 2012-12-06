@@ -1,0 +1,457 @@
+   1               		.file	"telnetd.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+  15               	.Ltext0:
+  16               	.global	telnetd_send_data
+  18               	telnetd_send_data:
+  19               	.LFB4:
+  20               	.LM1:
+  21 0000 FF92      		push r15
+  22 0002 0F93      		push r16
+  23 0004 1F93      		push r17
+  24 0006 CF93      		push r28
+  25 0008 DF93      		push r29
+  26               	/* prologue: function */
+  27               	/* frame size = 0 */
+  28               	.LM2:
+  29 000a C091 0000 		lds r28,rx_buffer_pointer_in
+  30 000e D091 0000 		lds r29,(rx_buffer_pointer_in)+1
+  31 0012 8091 0000 		lds r24,retransmission_pointer
+  32 0016 9091 0000 		lds r25,(retransmission_pointer)+1
+  33 001a C817      		cp r28,r24
+  34 001c D907      		cpc r29,r25
+  35 001e 01F4      		brne .+2
+  36 0020 00C0      		rjmp .L8
+  37 0022 60E0      		ldi r22,lo8(0)
+  38 0024 70E0      		ldi r23,hi8(0)
+  39               	.LM3:
+  40 0026 26E1      		ldi r18,lo8(22)
+  41 0028 30E0      		ldi r19,hi8(22)
+  42               	.LVL0:
+  43               	.L7:
+  44               	.LM4:
+  45 002a F62E      		mov r15,r22
+  46               	.LM5:
+  47 002c 629F      		mul r22,r18
+  48 002e F001      		movw r30,r0
+  49 0030 639F      		mul r22,r19
+  50 0032 F00D      		add r31,r0
+  51 0034 729F      		mul r23,r18
+  52 0036 F00D      		add r31,r0
+  53 0038 1124      		clr r1
+  54 003a E050      		subi r30,lo8(-(tcp_entry))
+  55 003c F040      		sbci r31,hi8(-(tcp_entry))
+  56 003e 8681      		ldd r24,Z+6
+  57 0040 9781      		ldd r25,Z+7
+  58 0042 8050      		subi r24,lo8(5888)
+  59 0044 9741      		sbci r25,hi8(5888)
+  60 0046 01F0      		breq .+2
+  61 0048 00C0      		rjmp .L3
+  62               	.LM6:
+  63 004a 8091 0000 		lds r24,telnetd_status
+  64 004e 80FD      		sbrc r24,0
+  65 0050 00C0      		rjmp .L8
+  66               	.LBB2:
+  67               	.LM7:
+  68 0052 8091 0000 		lds r24,telnetd_status
+  69 0056 8160      		ori r24,lo8(1)
+  70 0058 8093 0000 		sts telnetd_status,r24
+  71               	.LM8:
+  72 005c 8091 0000 		lds r24,rx_buffer_pointer_out
+  73 0060 9091 0000 		lds r25,(rx_buffer_pointer_out)+1
+  74 0064 9093 0000 		sts (retransmission_pointer)+1,r25
+  75 0068 8093 0000 		sts retransmission_pointer,r24
+  76 006c 40E0      		ldi r20,lo8(0)
+  77 006e 50E0      		ldi r21,hi8(0)
+  78               	.LVL1:
+  79 0070 00C0      		rjmp .L4
+  80               	.L6:
+  81               	.LM9:
+  82 0072 FA01      		movw r30,r20
+  83 0074 E050      		subi r30,lo8(-(eth_buffer))
+  84 0076 F040      		sbci r31,hi8(-(eth_buffer))
+  85 0078 D901      		movw r26,r18
+  86 007a 8D91      		ld r24,X+
+  87 007c 86AB      		std Z+54,r24
+  88 007e B093 0000 		sts (retransmission_pointer)+1,r27
+  89 0082 A093 0000 		sts retransmission_pointer,r26
+  90               	.LM10:
+  91 0086 A050      		subi r26,lo8(usart_rx_buffer+49)
+  92 0088 B040      		sbci r27,hi8(usart_rx_buffer+49)
+  93 008a 01F4      		brne .L5
+  94               	.LM11:
+  95 008c 2053      		subi r18,lo8(-(-48))
+  96 008e 3040      		sbci r19,hi8(-(-48))
+  97 0090 3093 0000 		sts (retransmission_pointer)+1,r19
+  98 0094 2093 0000 		sts retransmission_pointer,r18
+  99               	.L5:
+ 100               	.LM12:
+ 101 0098 4F5F      		subi r20,lo8(-(1))
+ 102 009a 5F4F      		sbci r21,hi8(-(1))
+ 103               	.L4:
+ 104               	.LM13:
+ 105 009c 2091 0000 		lds r18,retransmission_pointer
+ 106 00a0 3091 0000 		lds r19,(retransmission_pointer)+1
+ 107 00a4 C217      		cp r28,r18
+ 108 00a6 D307      		cpc r29,r19
+ 109 00a8 01F4      		brne .L6
+ 110               	.LM14:
+ 111 00aa 86E1      		ldi r24,lo8(22)
+ 112 00ac 90E0      		ldi r25,hi8(22)
+ 113 00ae 689F      		mul r22,r24
+ 114 00b0 8001      		movw r16,r0
+ 115 00b2 699F      		mul r22,r25
+ 116 00b4 100D      		add r17,r0
+ 117 00b6 789F      		mul r23,r24
+ 118 00b8 100D      		add r17,r0
+ 119 00ba 1124      		clr r1
+ 120 00bc 0050      		subi r16,lo8(-(tcp_entry))
+ 121 00be 1040      		sbci r17,hi8(-(tcp_entry))
+ 122 00c0 88E1      		ldi r24,lo8(24)
+ 123 00c2 F801      		movw r30,r16
+ 124 00c4 808B      		std Z+16,r24
+ 125               	.LM15:
+ 126 00c6 CA01      		movw r24,r20
+ 127 00c8 6F2D      		mov r22,r15
+ 128 00ca 0E94 0000 		call create_new_tcp_packet
+ 129               	.LVL2:
+ 130               	.LM16:
+ 131 00ce 83E0      		ldi r24,lo8(3)
+ 132 00d0 F801      		movw r30,r16
+ 133 00d2 838B      		std Z+19,r24
+ 134 00d4 00C0      		rjmp .L8
+ 135               	.L3:
+ 136               	.LM17:
+ 137 00d6 6F5F      		subi r22,lo8(-(1))
+ 138 00d8 7F4F      		sbci r23,hi8(-(1))
+ 139               	.LBE2:
+ 140               	.LM18:
+ 141 00da 6530      		cpi r22,5
+ 142 00dc 7105      		cpc r23,__zero_reg__
+ 143 00de 01F0      		breq .+2
+ 144 00e0 00C0      		rjmp .L7
+ 145               	.LM19:
+ 146 00e2 8091 0000 		lds r24,usart_status
+ 147 00e6 82FF      		sbrs r24,2
+ 148 00e8 00C0      		rjmp .L8
+ 149               	.LM20:
+ 150 00ea 8091 0000 		lds r24,usart_status
+ 151 00ee 8B7F      		andi r24,lo8(-5)
+ 152 00f0 8093 0000 		sts usart_status,r24
+ 153               	.L8:
+ 154               	/* epilogue start */
+ 155               	.LM21:
+ 156 00f4 DF91      		pop r29
+ 157 00f6 CF91      		pop r28
+ 158 00f8 1F91      		pop r17
+ 159 00fa 0F91      		pop r16
+ 160 00fc FF90      		pop r15
+ 161               	.LVL3:
+ 162 00fe 0895      		ret
+ 163               	.LFE4:
+ 165               	.global	telnetd
+ 167               	telnetd:
+ 168               	.LFB3:
+ 169               	.LM22:
+ 170               	.LVL4:
+ 171 0100 FF92      		push r15
+ 172 0102 0F93      		push r16
+ 173 0104 1F93      		push r17
+ 174               	/* prologue: function */
+ 175               	/* frame size = 0 */
+ 176 0106 F82E      		mov r15,r24
+ 177               	.LM23:
+ 178 0108 A82F      		mov r26,r24
+ 179 010a B0E0      		ldi r27,lo8(0)
+ 180 010c 86E1      		ldi r24,lo8(22)
+ 181 010e 90E0      		ldi r25,hi8(22)
+ 182               	.LVL5:
+ 183 0110 A89F      		mul r26,r24
+ 184 0112 F001      		movw r30,r0
+ 185 0114 A99F      		mul r26,r25
+ 186 0116 F00D      		add r31,r0
+ 187 0118 B89F      		mul r27,r24
+ 188 011a F00D      		add r31,r0
+ 189 011c 1124      		clr r1
+ 190 011e E050      		subi r30,lo8(-(tcp_entry))
+ 191 0120 F040      		sbci r31,hi8(-(tcp_entry))
+ 192 0122 8089      		ldd r24,Z+16
+ 193 0124 80FF      		sbrs r24,0
+ 194 0126 00C0      		rjmp .L11
+ 195               	.LM24:
+ 196 0128 8091 0000 		lds r24,usart_status
+ 197 012c 8B7F      		andi r24,lo8(-5)
+ 198 012e 8093 0000 		sts usart_status,r24
+ 199 0132 00C0      		rjmp .L19
+ 200               	.L11:
+ 201               	.LM25:
+ 202 0134 8189      		ldd r24,Z+17
+ 203 0136 9289      		ldd r25,Z+18
+ 204 0138 892B      		or r24,r25
+ 205 013a 01F0      		breq .L13
+ 206 013c 8189      		ldd r24,Z+17
+ 207 013e 9289      		ldd r25,Z+18
+ 208 0140 0197      		sbiw r24,1
+ 209 0142 01F4      		brne .L14
+ 210               	.L13:
+ 211               	.LM26:
+ 212 0144 86E1      		ldi r24,lo8(22)
+ 213 0146 90E0      		ldi r25,hi8(22)
+ 214 0148 A89F      		mul r26,r24
+ 215 014a 8001      		movw r16,r0
+ 216 014c A99F      		mul r26,r25
+ 217 014e 100D      		add r17,r0
+ 218 0150 B89F      		mul r27,r24
+ 219 0152 100D      		add r17,r0
+ 220 0154 1124      		clr r1
+ 221 0156 0050      		subi r16,lo8(-(tcp_entry))
+ 222 0158 1040      		sbci r17,hi8(-(tcp_entry))
+ 223 015a 81E0      		ldi r24,lo8(1)
+ 224 015c 90E0      		ldi r25,hi8(1)
+ 225 015e F801      		movw r30,r16
+ 226 0160 928B      		std Z+18,r25
+ 227 0162 818B      		std Z+17,r24
+ 228               	.LM27:
+ 229 0164 80E0      		ldi r24,lo8(eth_buffer+54)
+ 230 0166 90E0      		ldi r25,hi8(eth_buffer+54)
+ 231 0168 60E0      		ldi r22,lo8(__c.1559)
+ 232 016a 70E0      		ldi r23,hi8(__c.1559)
+ 233 016c 46E1      		ldi r20,lo8(22)
+ 234 016e 50E0      		ldi r21,hi8(22)
+ 235 0170 0E94 0000 		call memcpy_P
+ 236               	.LM28:
+ 237 0174 86E1      		ldi r24,lo8(22)
+ 238 0176 90E0      		ldi r25,hi8(22)
+ 239 0178 6F2D      		mov r22,r15
+ 240 017a 0E94 0000 		call create_new_tcp_packet
+ 241               	.LM29:
+ 242 017e 8091 0000 		lds r24,usart_status
+ 243 0182 8460      		ori r24,lo8(4)
+ 244 0184 8093 0000 		sts usart_status,r24
+ 245               	.LM30:
+ 246 0188 8091 0000 		lds r24,telnetd_status
+ 247 018c 8E7F      		andi r24,lo8(-2)
+ 248 018e 8093 0000 		sts telnetd_status,r24
+ 249               	.LM31:
+ 250 0192 8FEF      		ldi r24,lo8(-1)
+ 251 0194 F801      		movw r30,r16
+ 252 0196 838B      		std Z+19,r24
+ 253 0198 00C0      		rjmp .L19
+ 254               	.L14:
+ 255               	.LM32:
+ 256 019a 8189      		ldd r24,Z+17
+ 257 019c 9289      		ldd r25,Z+18
+ 258 019e 0297      		sbiw r24,2
+ 259 01a0 00F4      		brsh .+2
+ 260 01a2 00C0      		rjmp .L15
+ 261 01a4 8089      		ldd r24,Z+16
+ 262 01a6 83FF      		sbrs r24,3
+ 263 01a8 00C0      		rjmp .L15
+ 264               	.LM33:
+ 265 01aa 82E0      		ldi r24,lo8(2)
+ 266 01ac 90E0      		ldi r25,hi8(2)
+ 267 01ae 928B      		std Z+18,r25
+ 268 01b0 818B      		std Z+17,r24
+ 269               	.LBB3:
+ 270               	.LM34:
+ 271 01b2 2091 0000 		lds r18,eth_buffer+46
+ 272 01b6 30E0      		ldi r19,lo8(0)
+ 273 01b8 207F      		andi r18,lo8(240)
+ 274 01ba 3070      		andi r19,hi8(240)
+ 275 01bc 3595      		asr r19
+ 276 01be 2795      		ror r18
+ 277 01c0 3595      		asr r19
+ 278 01c2 2795      		ror r18
+ 279 01c4 B901      		movw r22,r18
+ 280               	.LVL6:
+ 281 01c6 6E5D      		subi r22,lo8(-(34))
+ 282 01c8 7F4F      		sbci r23,hi8(-(34))
+ 283 01ca 8091 0000 		lds r24,eth_buffer+17
+ 284 01ce 482F      		mov r20,r24
+ 285 01d0 50E0      		ldi r21,lo8(0)
+ 286 01d2 4E5D      		subi r20,lo8(-(34))
+ 287 01d4 5F4F      		sbci r21,hi8(-(34))
+ 288 01d6 9091 0000 		lds r25,eth_buffer+16
+ 289 01da 80E0      		ldi r24,lo8(0)
+ 290 01dc 480F      		add r20,r24
+ 291 01de 591F      		adc r21,r25
+ 292 01e0 421B      		sub r20,r18
+ 293 01e2 530B      		sbc r21,r19
+ 294 01e4 FB01      		movw r30,r22
+ 295 01e6 E050      		subi r30,lo8(-(eth_buffer))
+ 296 01e8 F040      		sbci r31,hi8(-(eth_buffer))
+ 297 01ea 00C0      		rjmp .L16
+ 298               	.L20:
+ 299               	.LM35:
+ 300 01ec 5D9B      		sbis 43-32,5
+ 301 01ee 00C0      		rjmp .L20
+ 302               	.LM36:
+ 303 01f0 8191      		ld r24,Z+
+ 304 01f2 8CB9      		out 44-32,r24
+ 305               	.LM37:
+ 306 01f4 6F5F      		subi r22,lo8(-(1))
+ 307 01f6 7F4F      		sbci r23,hi8(-(1))
+ 308               	.L16:
+ 309 01f8 6417      		cp r22,r20
+ 310 01fa 7507      		cpc r23,r21
+ 311 01fc 04F0      		brlt .L20
+ 312               	.LBE3:
+ 313               	.LM38:
+ 314 01fe 86E1      		ldi r24,lo8(22)
+ 315 0200 90E0      		ldi r25,hi8(22)
+ 316 0202 A89F      		mul r26,r24
+ 317 0204 F001      		movw r30,r0
+ 318 0206 A99F      		mul r26,r25
+ 319 0208 F00D      		add r31,r0
+ 320 020a B89F      		mul r27,r24
+ 321 020c F00D      		add r31,r0
+ 322 020e 1124      		clr r1
+ 323 0210 E050      		subi r30,lo8(-(tcp_entry))
+ 324 0212 F040      		sbci r31,hi8(-(tcp_entry))
+ 325 0214 80E1      		ldi r24,lo8(16)
+ 326 0216 808B      		std Z+16,r24
+ 327               	.LM39:
+ 328 0218 80E0      		ldi r24,lo8(0)
+ 329 021a 90E0      		ldi r25,hi8(0)
+ 330 021c 6F2D      		mov r22,r15
+ 331               	.LVL7:
+ 332 021e 0E94 0000 		call create_new_tcp_packet
+ 333 0222 00C0      		rjmp .L19
+ 334               	.L15:
+ 335               	.LM40:
+ 336 0224 86E1      		ldi r24,lo8(22)
+ 337 0226 90E0      		ldi r25,hi8(22)
+ 338 0228 A89F      		mul r26,r24
+ 339 022a F001      		movw r30,r0
+ 340 022c A99F      		mul r26,r25
+ 341 022e F00D      		add r31,r0
+ 342 0230 B89F      		mul r27,r24
+ 343 0232 F00D      		add r31,r0
+ 344 0234 1124      		clr r1
+ 345 0236 E050      		subi r30,lo8(-(tcp_entry))
+ 346 0238 F040      		sbci r31,hi8(-(tcp_entry))
+ 347 023a 8189      		ldd r24,Z+17
+ 348 023c 9289      		ldd r25,Z+18
+ 349 023e 0297      		sbiw r24,2
+ 350 0240 00F0      		brlo .L18
+ 351 0242 8089      		ldd r24,Z+16
+ 352 0244 84FF      		sbrs r24,4
+ 353 0246 00C0      		rjmp .L18
+ 354 0248 8091 0000 		lds r24,telnetd_status
+ 355 024c 80FF      		sbrs r24,0
+ 356 024e 00C0      		rjmp .L18
+ 357               	.LM41:
+ 358 0250 8FEF      		ldi r24,lo8(-1)
+ 359 0252 838B      		std Z+19,r24
+ 360               	.LM42:
+ 361 0254 8091 0000 		lds r24,retransmission_pointer
+ 362 0258 9091 0000 		lds r25,(retransmission_pointer)+1
+ 363 025c 9093 0000 		sts (rx_buffer_pointer_out)+1,r25
+ 364 0260 8093 0000 		sts rx_buffer_pointer_out,r24
+ 365               	.LM43:
+ 366 0264 8091 0000 		lds r24,telnetd_status
+ 367 0268 8E7F      		andi r24,lo8(-2)
+ 368 026a 8093 0000 		sts telnetd_status,r24
+ 369 026e 00C0      		rjmp .L19
+ 370               	.L18:
+ 371               	.LM44:
+ 372 0270 86E1      		ldi r24,lo8(22)
+ 373 0272 90E0      		ldi r25,hi8(22)
+ 374 0274 A89F      		mul r26,r24
+ 375 0276 F001      		movw r30,r0
+ 376 0278 A99F      		mul r26,r25
+ 377 027a F00D      		add r31,r0
+ 378 027c B89F      		mul r27,r24
+ 379 027e F00D      		add r31,r0
+ 380 0280 1124      		clr r1
+ 381 0282 E050      		subi r30,lo8(-(tcp_entry))
+ 382 0284 F040      		sbci r31,hi8(-(tcp_entry))
+ 383 0286 8089      		ldd r24,Z+16
+ 384 0288 8823      		tst r24
+ 385 028a 01F4      		brne .L19
+ 386               	.LM45:
+ 387 028c 8091 0000 		lds r24,telnetd_status
+ 388 0290 8E7F      		andi r24,lo8(-2)
+ 389 0292 8093 0000 		sts telnetd_status,r24
+ 390               	.LM46:
+ 391 0296 0E94 0000 		call telnetd_send_data
+ 392               	.L19:
+ 393               	/* epilogue start */
+ 394               	.LM47:
+ 395 029a 1F91      		pop r17
+ 396 029c 0F91      		pop r16
+ 397 029e FF90      		pop r15
+ 398               	.LVL8:
+ 399 02a0 0895      		ret
+ 400               	.LFE3:
+ 402               	.global	telnetd_init
+ 404               	telnetd_init:
+ 405               	.LFB2:
+ 406               	.LM48:
+ 407               	/* prologue: function */
+ 408               	/* frame size = 0 */
+ 409               	.LM49:
+ 410 02a2 87E1      		ldi r24,lo8(23)
+ 411 02a4 90E0      		ldi r25,hi8(23)
+ 412 02a6 60E0      		ldi r22,lo8(gs(telnetd))
+ 413 02a8 70E0      		ldi r23,hi8(gs(telnetd))
+ 414 02aa 0E94 0000 		call add_tcp_app
+ 415               	/* epilogue start */
+ 416               	.LM50:
+ 417 02ae 0895      		ret
+ 418               	.LFE2:
+ 420               		.section	.progmem.data,"a",@progbits
+ 423               	__c.1559:
+ 424 0000 5374 6172 		.string	"Start Telnet Server:\r\n"
+ 424      7420 5465 
+ 424      6C6E 6574 
+ 424      2053 6572 
+ 424      7665 723A 
+ 425               		.comm retransmission_pointer,2,1
+ 426               		.comm telnetd_status,1,1
+ 427               		.comm eth,1,1
+ 428               		.comm TCP_PORT_TABLE,20,1
+ 429               		.comm UDP_PORT_TABLE,20,1
+ 430               		.comm arp_entry,60,1
+ 431               		.comm tcp_entry,132,1
+ 432               		.comm buffercounter,2,1
+ 433               		.comm usart_rx_buffer,50,1
+ 434               		.comm rx_buffer_pointer_in,2,1
+ 435               		.comm rx_buffer_pointer_out,2,1
+ 436               		.comm usart_status,1,1
+ 477               	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 telnetd.c
+C:\DOCUME~1\flyman\LOCALS~1\Temp/ccZ45Ktp.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\flyman\LOCALS~1\Temp/ccZ45Ktp.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\flyman\LOCALS~1\Temp/ccZ45Ktp.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\flyman\LOCALS~1\Temp/ccZ45Ktp.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\flyman\LOCALS~1\Temp/ccZ45Ktp.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\flyman\LOCALS~1\Temp/ccZ45Ktp.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\flyman\LOCALS~1\Temp/ccZ45Ktp.s:18     .text:00000000 telnetd_send_data
+                            *COM*:00000002 rx_buffer_pointer_in
+                            *COM*:00000002 retransmission_pointer
+                            *COM*:00000084 tcp_entry
+                            *COM*:00000001 telnetd_status
+                            *COM*:00000002 rx_buffer_pointer_out
+                            *COM*:00000032 usart_rx_buffer
+                            *COM*:00000001 usart_status
+C:\DOCUME~1\flyman\LOCALS~1\Temp/ccZ45Ktp.s:167    .text:00000100 telnetd
+C:\DOCUME~1\flyman\LOCALS~1\Temp/ccZ45Ktp.s:423    .progmem.data:00000000 __c.1559
+C:\DOCUME~1\flyman\LOCALS~1\Temp/ccZ45Ktp.s:404    .text:000002a2 telnetd_init
+                            *COM*:00000001 eth
+                            *COM*:00000014 TCP_PORT_TABLE
+                            *COM*:00000014 UDP_PORT_TABLE
+                            *COM*:0000003c arp_entry
+                            *COM*:00000002 buffercounter
+
+UNDEFINED SYMBOLS
+eth_buffer
+create_new_tcp_packet
+memcpy_P
+add_tcp_app
+__do_clear_bss

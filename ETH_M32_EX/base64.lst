@@ -1,0 +1,190 @@
+   1               		.file	"base64.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+  15               	.Ltext0:
+  16               	.global	decode_base64
+  18               	decode_base64:
+  19               	.LFB2:
+  20               	.LM1:
+  21               	.LVL0:
+  22 0000 CF93      		push r28
+  23 0002 DF93      		push r29
+  24               	/* prologue: function */
+  25               	/* frame size = 0 */
+  26 0004 EC01      		movw r28,r24
+  27               	.LM2:
+  28 0006 DB01      		movw r26,r22
+  29 0008 00C0      		rjmp .L2
+  30               	.LVL1:
+  31               	.L6:
+  32               	.LM3:
+  33 000a 8695      		lsr r24
+  34 000c 8695      		lsr r24
+  35 000e FD01      		movw r30,r26
+  36 0010 8193      		st Z+,r24
+  37               	.LM4:
+  38 0012 8881      		ld r24,Y
+  39 0014 8370      		andi r24,lo8(3)
+  40 0016 8295      		swap r24
+  41 0018 807F      		andi r24,lo8(-16)
+  42 001a 1196      		adiw r26,1
+  43 001c 8C93      		st X,r24
+  44 001e 1197      		sbiw r26,1
+  45               	.LM5:
+  46 0020 9981      		ldd r25,Y+1
+  47 0022 9923      		tst r25
+  48 0024 01F4      		brne .L3
+  49               	.LM6:
+  50 0026 DF01      		movw r26,r30
+  51 0028 1196      		adiw r26,1
+  52 002a 42E0      		ldi r20,lo8(2)
+  53               	.LVL2:
+  54 002c 00C0      		rjmp .L4
+  55               	.LVL3:
+  56               	.L3:
+  57               	.LM7:
+  58 002e 9295      		swap r25
+  59 0030 9F70      		andi r25,lo8(15)
+  60 0032 890F      		add r24,r25
+  61 0034 1196      		adiw r26,1
+  62 0036 8C93      		st X,r24
+  63 0038 1197      		sbiw r26,1
+  64               	.LM8:
+  65 003a 8981      		ldd r24,Y+1
+  66 003c 8F70      		andi r24,lo8(15)
+  67 003e 880F      		lsl r24
+  68 0040 880F      		lsl r24
+  69 0042 1296      		adiw r26,2
+  70 0044 8C93      		st X,r24
+  71 0046 1297      		sbiw r26,2
+  72               	.LM9:
+  73 0048 9A81      		ldd r25,Y+2
+  74 004a 9923      		tst r25
+  75 004c 01F4      		brne .L5
+  76               	.LM10:
+  77 004e 1396      		adiw r26,3
+  78 0050 41E0      		ldi r20,lo8(1)
+  79               	.LVL4:
+  80 0052 00C0      		rjmp .L4
+  81               	.LVL5:
+  82               	.L5:
+  83               	.LM11:
+  84 0054 9295      		swap r25
+  85 0056 9695      		lsr r25
+  86 0058 9695      		lsr r25
+  87 005a 9370      		andi r25,lo8(3)
+  88 005c 890F      		add r24,r25
+  89 005e 1296      		adiw r26,2
+  90 0060 8C93      		st X,r24
+  91 0062 1297      		sbiw r26,2
+  92               	.LM12:
+  93 0064 8A81      		ldd r24,Y+2
+  94 0066 8F73      		andi r24,lo8(63)
+  95 0068 1396      		adiw r26,3
+  96 006a 8C93      		st X,r24
+  97 006c 1397      		sbiw r26,3
+  98               	.LM13:
+  99 006e 1496      		adiw r26,4
+ 100 0070 2396      		adiw r28,3
+ 101               	.LVL6:
+ 102               	.L2:
+ 103               	.LM14:
+ 104 0072 8881      		ld r24,Y
+ 105 0074 8823      		tst r24
+ 106 0076 01F4      		brne .L6
+ 107 0078 40E0      		ldi r20,lo8(0)
+ 108               	.LVL7:
+ 109               	.L4:
+ 110               	.LM15:
+ 111 007a 1C92      		st X,__zero_reg__
+ 112 007c EB01      		movw r28,r22
+ 113               	.LVL8:
+ 114 007e 00C0      		rjmp .L7
+ 115               	.LVL9:
+ 116               	.L8:
+ 117               	.LBB2:
+ 118               	.LM16:
+ 119 0080 E881      		ld r30,Y
+ 120               	.LVL10:
+ 121 0082 F0E0      		ldi r31,lo8(0)
+ 122 0084 EF73      		andi r30,lo8(63)
+ 123 0086 F070      		andi r31,hi8(63)
+ 124 0088 E050      		subi r30,lo8(-(BASE64CODE))
+ 125 008a F040      		sbci r31,hi8(-(BASE64CODE))
+ 126               	/* #APP */
+ 127               	 ;  72 "base64.c" 1
+ 128 008c E491      		lpm r30, Z
+ 129               		
+ 130               	 ;  0 "" 2
+ 131               	.LVL11:
+ 132               	/* #NOAPP */
+ 133               	.LBE2:
+ 134 008e E993      		st Y+,r30
+ 135               	.L7:
+ 136               	.LM17:
+ 137 0090 CA17      		cp r28,r26
+ 138 0092 DB07      		cpc r29,r27
+ 139 0094 01F4      		brne .L8
+ 140 0096 FD01      		movw r30,r26
+ 141               	.LVL12:
+ 142 0098 842F      		mov r24,r20
+ 143               	.LM18:
+ 144 009a 9DE3      		ldi r25,lo8(61)
+ 145 009c 00C0      		rjmp .L9
+ 146               	.LVL13:
+ 147               	.L10:
+ 148 009e 9193      		st Z+,r25
+ 149               	.LM19:
+ 150 00a0 8150      		subi r24,lo8(-(-1))
+ 151               	.LVL14:
+ 152               	.L9:
+ 153               	.LM20:
+ 154 00a2 8823      		tst r24
+ 155 00a4 01F4      		brne .L10
+ 156               	.LM21:
+ 157 00a6 A40F      		add r26,r20
+ 158 00a8 B11D      		adc r27,__zero_reg__
+ 159 00aa 1C92      		st X,__zero_reg__
+ 160               	/* epilogue start */
+ 161               	.LM22:
+ 162 00ac DF91      		pop r29
+ 163 00ae CF91      		pop r28
+ 164 00b0 0895      		ret
+ 165               	.LFE2:
+ 167               	.global	BASE64CODE
+ 168               		.section	.progmem.data,"a",@progbits
+ 171               	BASE64CODE:
+ 172 0000 41        		.ascii	"A"
+ 173 0001 4243 4445 		.string	"BCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/="
+ 173      4647 4849 
+ 173      4A4B 4C4D 
+ 173      4E4F 5051 
+ 173      5253 5455 
+ 174               		.comm buffercounter,2,1
+ 175               		.comm usart_rx_buffer,50,1
+ 176               		.comm rx_buffer_pointer_in,2,1
+ 177               		.comm rx_buffer_pointer_out,2,1
+ 178               		.comm usart_status,1,1
+ 203               	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 base64.c
+C:\DOCUME~1\flyman\LOCALS~1\Temp/ccI8OQVd.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\flyman\LOCALS~1\Temp/ccI8OQVd.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\flyman\LOCALS~1\Temp/ccI8OQVd.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\flyman\LOCALS~1\Temp/ccI8OQVd.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\flyman\LOCALS~1\Temp/ccI8OQVd.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\flyman\LOCALS~1\Temp/ccI8OQVd.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\flyman\LOCALS~1\Temp/ccI8OQVd.s:18     .text:00000000 decode_base64
+C:\DOCUME~1\flyman\LOCALS~1\Temp/ccI8OQVd.s:171    .progmem.data:00000000 BASE64CODE
+                            *COM*:00000002 buffercounter
+                            *COM*:00000032 usart_rx_buffer
+                            *COM*:00000002 rx_buffer_pointer_in
+                            *COM*:00000002 rx_buffer_pointer_out
+                            *COM*:00000001 usart_status
+
+UNDEFINED SYMBOLS
+__do_clear_bss
