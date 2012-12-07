@@ -41,7 +41,7 @@ by recompiling java source.
 
 For more understanding of raw format read:
 http://winlirc.sourceforge.net/technicaldetails.html
-You can find some lircd.conf files for of different remotes in:
+You can find some lircd.conf files for different remotes in:
 http://lircconfig.commandir.com/lircd.conf/
 As well as you can clone IR device by examining it using LIRC or WinLIRC:
 
